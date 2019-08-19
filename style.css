@@ -1,0 +1,55 @@
+.container {
+    position: relative;
+    width: 325px;
+    height: 290px;
+    background-color: aqua;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    border: 5px solid black;
+}
+
+h1 {
+    text-align: center;
+}
+
+.gameNum {
+   width: 100px;
+   height: 90px;
+    border: 2px solid black;
+    text-align: center;
+    line-height: 90px;
+    font-size: 0;
+}
+
+.modal {
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    width: 320px;
+    height: 290px;
+    background-color: chocolate;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input[type="button"] {
+    display: block;
+    margin: auto;
+}
+
+.openCards{
+    font-size: xx-large;
+    background-color: blue;
+    /*transition: ease-in-out;
+    transition-duration: 1s;*/
+}
+
+.match {
+    background-color: blueviolet;
+    transform: translate(1.2);
+    transition-duration: 1s;
+}
