@@ -24,16 +24,42 @@ h1 {
     font-size: 0;
 }
 
-.modal {
-    display: block;
+.hide {
+    display: none;
+}
+
+.modal {    
     position: absolute;
-    visibility: hidden;
+   /* visibility: hidden;
+   display: block;
+   */
     width: 320px;
     height: 290px;
-    background-color: chocolate;
+       background-image: radial-gradient(red, brown, silver, black);
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -53%);
+     animation-name: zoomIn;
+     animation-duration: 4s;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+i.fa.fa-trophy {
+    margin: 5% auto 10%;
+    display: block;
+    text-align: center;
+    font-size: 72px;
+    color: darkgoldenrod;
 }
 
 input[type="button"] {
@@ -52,4 +78,11 @@ input[type="button"] {
     background-color: blueviolet;
     transform: translate(1.2);
     transition-duration: 1s;
+}
+
+.timeKeeper {
+    width: 30%;
+    margin: auto;
+    text-align: center;
+    font-size: xx-large;
 }

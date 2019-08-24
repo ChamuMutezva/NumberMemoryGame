@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
+    <title>Number Memory Game</title>
     <meta name="description" content="" />
+     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -24,13 +25,18 @@
         <div class="gameNum"></div>
         <div class="gameNum"></div>
       </div>
-      <div class="modal">
+      <div class="modal hide">
         <h1>Congradulations</h1>
+        <div class="congradulations"><i class="fa fa-trophy"></i></div>
         <input type="button" value="Close" class="modalClose"/>
       </div>
     </div>
-    <input type="button" value="Restart" />
-
+    <input type="button" value="Start"  id="startGame" />
+<div class="timeKeeper">
+      <span id="minute">00</span>
+      <span id="divider">:</span>
+      <span id="seconds">00</span>
+    </div>
     <script src="memory.js"></script>
   </body>
 </html>

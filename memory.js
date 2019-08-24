@@ -1,10 +1,16 @@
 const numArray = [1, 2, 3, 4, 5, 4, 3, 2, 1];
 let tempArray = [];
 let count = 0;
+let clickCounts = 0;
+let sec = 0;
+let min = 0;
+let interval;
+let countUp = 0;
 const cards = Array.from(document.querySelectorAll(".gameNum"));
-let clicked = true;
+let clicked = false;
 let modal = document.querySelector(".modal");
 let modalClose = document.querySelector(".modalClose");
+let playGame = document.getElementById("startGame");
 console.log(cards);
 
 function shuffle(array) {
@@ -24,33 +30,42 @@ function shuffle(array) {
 };
 shuffle(numArray);
 
-if (clicked == true) {
-    cards.forEach((elem, index, myArray) => {
-        console.log(elem);
-        elem.innerHTML = numArray[index];
-        elem.addEventListener("click", function (event) {
-            console.log(event.target);
-            console.log(myArray[index]);
-            if (elem.classList.contains('openCards')) {
-                console.log('Card already opened, click another card');
-                return;
-            } else {
-                elem.classList.add('openCards');
-                //compareCards(numArray[index]);
-                compareCards(event.target);
-            }
-        });
-    })
-} else {
+playGame.addEventListener("click", startGame);
 
-    cards.forEach(elem => {
-        elem.removeEventListener('click', function (event) {
-            console.log("Ayeah , job completed");
+function startGame() {
+    startTimer();
+    clicked = true;
+
+    if (clicked == true) {
+        cards.forEach((elem, index, myArray) => {
+            console.log(elem);
+            elem.innerHTML = numArray[index];
+            elem.addEventListener("click", function (event) {
+                console.log(event.target);
+                console.log(myArray[index]);
+                if (elem.classList.contains('openCards')) {
+                    console.log('Card already opened, click another card');
+                    return;
+                } else {
+                    elem.classList.add('openCards');
+                    //compareCards(numArray[index]);
+                    compareCards(event.target);
+                }
+            });
+        
         })
-    })
+    } else {
 
-
+        cards.forEach(elem => {
+            elem.removeEventListener('click', function (event) {
+                //event.preventDefault;
+                console.log("Ayeah , job completed");
+            })
+        })
+    }
+    
 }
+
 
 function compareCards(currNum) {
     if (tempArray.length <= 2) {
@@ -89,8 +104,10 @@ function endGame() {
 
     if (count === 4) {        
         console.log("Welldone , game ended");
-        clicked = false;    
-        modal.style.visibility = "visible";
+        clicked = false;  
+        clearInterval(interval);
+       // modal.style.visibility = "visible";
+        modal.classList.toggle("hide");
         cards.forEach(elem => {
             elem.removeEventListener('click', function (event) {
                 //console.log("Ayeah , job completed");
@@ -103,5 +120,37 @@ function endGame() {
 
 // close the modal box
 modalClose.addEventListener("click", function () {
-    modal.style.visibility = "hidden";
+   // modal.style.visibility = "hidden";
+    modal.classList.toggle("hide");
 })
+
+function startTimer() {
+     interval = setInterval(myTimer, 1000);
+}
+
+function myTimer() {
+    let minHand = document.getElementById("minute");
+    let secHand = document.getElementById("seconds");
+    sec++;
+   
+    if (sec > 59) {
+        min++;
+        sec = 0;
+    }
+
+    if (sec < 10) {
+        console.log(`0${min}:0${sec}`);
+        minHand.innerHTML = `0${min}`;
+        secHand.innerHTML = `0${sec}`;
+    } else {
+        console.log(`0${min}:${sec}`);
+        minHand.innerHTML = `0${min}`;
+        secHand.innerHTML = `${sec}`;
+    }
+   
+    
+    //Stop timer at 2 minutes;
+    if (min >= 2) {
+        clearInterval(interval);
+    }
+}   
