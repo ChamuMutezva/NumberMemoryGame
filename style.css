@@ -14,6 +14,13 @@
 h1 {
     text-align: center;
 }
+.gameSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 3%;
+    width: 325px;   
+    margin: 2% auto
+}
 
 .gameNum {
    width: 100px;
@@ -64,9 +71,12 @@ i.fa.fa-trophy {
 
 input[type="button"] {
     display: block;
-    margin: auto;
+    height: 8vh;  
 }
 
+.modal input[type="button"] {
+    margin: auto;
+}
 .openCards{
     font-size: xx-large;
     background-color: blue;

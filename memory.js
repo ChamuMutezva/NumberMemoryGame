@@ -7,11 +7,39 @@ let min = 0;
 let interval;
 let countUp = 0;
 const cards = Array.from(document.querySelectorAll(".gameNum"));
-let clicked = false;
+let clicked = false; // to start the game
+let gameEnd = false;
 let modal = document.querySelector(".modal");
 let modalClose = document.querySelector(".modalClose");
 let playGame = document.getElementById("startGame");
+let resetGame = document.querySelector(".resetGame");
+console.log("Use this button to restart the game " + resetGame.value);
 console.log(cards);
+
+function reset() {
+    console.log(numArray);
+    shuffle(numArray);
+    console.log(numArray);
+    tempArray = [];
+     count = 0;
+    clickCounts = 0;
+    sec = 0;
+    min = 0;
+    countUp = 0;
+    clicked = false; 
+    gameEnd = false;
+    clearInterval(interval);
+    cards.forEach((elem) => {
+      elem.classList.remove('openCards');
+       elem.classList.remove('match');
+       console.log(elem);
+    })
+    myTimer();
+    startGame();   
+  
+}
+
+resetGame.addEventListener("click", reset);
 
 function shuffle(array) {
     console.log(array.length);
@@ -28,11 +56,17 @@ function shuffle(array) {
 
     return array;
 };
+//shuffle here
 shuffle(numArray);
-
 playGame.addEventListener("click", startGame);
 
 function startGame() {
+    if (clicked == true) {
+        return;
+    }
+    if (gameEnd == true) {
+        return;
+    }
     startTimer();
     clicked = true;
 
@@ -104,7 +138,17 @@ function endGame() {
 
     if (count === 4) {        
         console.log("Welldone , game ended");
-        clicked = false;  
+        cards.forEach((elem) => {
+            if (elem.classList.contains('openCards')) {
+                return;
+            } else {
+                elem.classList.add('openCards');                
+                console.log(elem);
+            }
+            
+        })
+        clicked = false; 
+        gameEnd = true;
         clearInterval(interval);
        // modal.style.visibility = "visible";
         modal.classList.toggle("hide");
@@ -125,7 +169,12 @@ modalClose.addEventListener("click", function () {
 })
 
 function startTimer() {
-     interval = setInterval(myTimer, 1000);
+    if (clicked == false) {
+        interval = setInterval(myTimer, 1000);
+    } else {
+        return;
+    }
+    
 }
 
 function myTimer() {
