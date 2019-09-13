@@ -29,6 +29,7 @@ function reset() {
     clicked = false; 
     gameEnd = false;
     clearInterval(interval);
+    modal.classList.add("hide");
     cards.forEach((elem) => {
       elem.classList.remove('openCards');
        elem.classList.remove('match');
