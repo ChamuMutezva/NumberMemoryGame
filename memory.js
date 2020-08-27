@@ -31,10 +31,10 @@ function reset() {
     gameEnd = false;
     clearInterval(interval);
     modal.classList.add("hide");
-    cards.forEach((elem) => {
+    cards.forEach((elem, index) => {
         elem.classList.remove('openCards');
         elem.classList.remove('match');
-        //elem.innerHTML = ""
+        elem.innerHTML = numArray[index]
          elem.removeEventListener('click', startGame, true)
         console.log(elem);
     })
