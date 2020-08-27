@@ -1,11 +1,11 @@
 const numArray = [1, 2, 3, 4, 5, 4, 3, 2, 1];
 let tempArray = [];
 let count = 0;
-let clickCounts = 0;
+//let clickCounts = 0;
 let sec = 0;
 let min = 0;
 let interval;
-let countUp = 0;
+//let countUp = 0;
 const cards = Array.from(document.querySelectorAll(".gameNum"));
 let clicked = false; // to start the game
 let gameEnd = false;
@@ -16,33 +16,29 @@ let resetGame = document.querySelector(".resetGame");
 console.log("Use this button to restart the game " + resetGame.value);
 console.log(cards);
 
+
 function reset() {
     const minHand = document.getElementById("minute");
     const secHand = document.getElementById("seconds");
-    shuffle(numArray);
+
     console.log(numArray);
     tempArray = [];
     count = 0;
-    clickCounts = 0;
     sec = 0;
     min = 0;
-    countUp = 0;
     clicked = false;
     gameEnd = false;
     clearInterval(interval);
     modal.classList.add("hide");
-    cards.forEach((elem, index) => {
-        elem.classList.remove('openCards');
-        elem.classList.remove('match');
-        elem.innerHTML = numArray[index]
-         elem.removeEventListener('click', startGame, true)
-        console.log(elem);
-    })
-     
-   // minHand.innerHTML = `0${min}`;
-   // secHand.innerHTML = `0${sec}`;
 
-     myTimer();
+
+    cards.forEach(elem => {
+        elem.classList.remove("openCards")
+        elem.classList.remove("match")
+    })
+
+
+    myTimer();
     startGame();
 }
 
@@ -63,9 +59,10 @@ function shuffle(array) {
 
     return array;
 };
+
 //shuffle here
-shuffle(numArray);
-playGame.addEventListener("click", startGame, true);
+//shuffle(numArray);
+playGame.addEventListener("click", startGame);
 
 function startGame() {
     if (clicked == true) {
@@ -75,17 +72,17 @@ function startGame() {
         return;
     }
 
-   shuffle(numArray);
+    shuffle(numArray);
     startTimer();
     clicked = true;
 
     if (clicked) {
         cards.forEach((elem, index, myArray) => {
-            console.log(elem);
+            //  console.log(elem);
             elem.innerHTML = numArray[index];
             elem.addEventListener("click", function (event) {
-                console.log(event.target);
-                console.log(myArray[index]);
+                // console.log(event.target);
+                // console.log(myArray[index]);
                 if (elem.classList.contains('openCards')) {
                     console.log('Card already opened, click another card');
                     return;
@@ -98,14 +95,6 @@ function startGame() {
 
         })
     }
-    //  else {
-
-    //   cards.forEach(elem => {
-    //       elem.removeEventListener('click', function (event) {               
-    //          console.log("Ayeah , job completed");
-    //     })
-    //   }) 
-    //  }
 
 }
 
@@ -175,6 +164,7 @@ function endGame() {
 modalClose.addEventListener("click", function () {
     // modal.style.visibility = "hidden";
     modal.classList.toggle("hide");
+    reset()
 })
 
 function startTimer() {
