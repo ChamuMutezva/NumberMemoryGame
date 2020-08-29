@@ -39,7 +39,7 @@ function reset() {
 
 
     myTimer();
-    startGame();
+   // startGame();
 }
 
 resetGame.addEventListener("click", reset);
@@ -149,7 +149,16 @@ function endGame() {
         gameEnd = true;
         clearInterval(interval);
         // modal.style.visibility = "visible";
+
+
+       // const div = document.createElement("div")
+       // div.innerHTML = winnerTemplate
+
+
+
+      //  modal.appendChild(div)
         modal.classList.toggle("hide");
+        
         cards.forEach(elem => {
             elem.removeEventListener('click', function (event) {
                 //console.log("Ayeah , job completed");
@@ -160,12 +169,13 @@ function endGame() {
     }
 }
 
-// close the modal box
-modalClose.addEventListener("click", function () {
-    // modal.style.visibility = "hidden";
-    modal.classList.toggle("hide");
-    reset()
-})
+
+    // close the modal box
+    modalClose.addEventListener("click", function () {
+        // modal.style.visibility = "hidden";
+        modal.classList.toggle("hide");
+        reset()
+    })
 
 function startTimer() {
     if (clicked == false) {
@@ -205,4 +215,9 @@ function myTimer() {
             return elem.removeEventListener('click', startGame, false)
         })
     }
-}   
+}
+
+const winnerTemplate = `<h1>Congradulations hooray</h1>
+        <div class="congradulations"><i class="fa fa-trophy"></i></div>
+        <input type="button" value="Close" class="modalClose"/>
+`
