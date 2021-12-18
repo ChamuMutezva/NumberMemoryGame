@@ -8,46 +8,74 @@
   <meta name="description" content="" />
   <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" href="#">
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <h1>Memory Game</h1>
-  <p>Press "Start" for game to begin</p>
-  <div class="gameCtrl">
-    <div class="container">
-      <div class="gameNum"></div>
-      <div class="gameNum"></div>
-      <div class="gameNum"></div>
+  <div class="wrapper">
+    <div class="modalStart">
+      <div class="menuCtrlCentre">
+        <fieldset>
+          <legend>Select theme</legend>
+          <input type="radio" name="theme" id="numbers">
+          <label for="numbers">Numbers</label>
 
-      <div class="gameNum"></div>
-      <div class="gameNum"></div>
-      <div class="gameNum"></div>
+          <input type="radio" name="theme" id="icons">
+          <label for="icons">Icons</label>
+        </fieldset>
 
-      <div class="gameNum"></div>
-      <div class="gameNum"></div>
-      <div class="gameNum"></div>
-    </div>
-    <div class="modal hide">
-      
-      <div>
-        <h1>Congradulations</h1>
-        <div class="congradulations"><i class="fa fa-trophy"></i></div>
-        <input type="button" value="Close" class="modalClose" />
+        <fieldset>
+          <legend>Number of players</legend>
+
+          <input type="radio" name="players" id="one">
+          <label for="one">1</label>
+
+          <input type="radio" name="players" id="two">
+          <label for="two">2</label>
+
+          <input type="radio" name="players" id="three">
+          <label for="three">3</label>
+
+          <input type="radio" name="players" id="four">
+          <label for="four">4</label>
+
+        </fieldset>
+
+        <fieldset>
+          <legend>Grid size</legend>
+          <input type="radio" name="gridSize" id="fourbyfour" value="4" checked>
+          <label for="fourbyfour">4X4</label>
+
+          <input type="radio" name="gridSize" value="6" id="sixbysix">
+          <label for="sixbysix">6X6</label>
+        </fieldset>
       </div>
-    
+      <button class="modalMenuCtrl">Start Game</button>
     </div>
-  </div>
-  <div class="gameSection">
-    <input type="button" value="Start" id="startGame" />
-    <input type="button" value="Reset" class="resetGame" />
-  </div>
+    <h1>Memory Game</h1>
+    <p>Press "Start" for game to begin</p>
+    <div class="gameCtrl">
+      <div class="container">
+        
+      </div>
+      <div class="modalEnd hide">        
+          <h1>Congradulations</h1>
+          <div class="congradulations"><i class="fa fa-trophy"></i></div>
+          <input type="button" value="Close" class="modalClose" />      
 
-  <div class="timeKeeper">
-    <span id="minute">00</span>
-    <span id="divider">:</span>
-    <span id="seconds">00</span>
+      </div>
+    </div>
+    <div class="gameSection">
+      <input type="button" value="Start" id="startGame" />
+      <input type="button" value="Reset" class="resetBtn" />
+    </div>
+    <div class="timeKeeper">
+      <span id="minute">00</span>
+      <span id="divider">:</span>
+      <span id="seconds">00</span>
+    </div>
   </div>
   <script src="memory.js"></script>
 </body>
