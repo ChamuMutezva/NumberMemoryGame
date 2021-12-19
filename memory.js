@@ -10,6 +10,7 @@ let selectFour = true; // grid size selector 4X4 or 6X6
 let clicked = false; // to start the game
 let gameEnd = false;
 let tempArray = [];
+let stepCount = 0;
 let count = 0;
 let sec = 0;
 let min = 0;
@@ -32,7 +33,7 @@ modalMenuControl.addEventListener("click", () => {
     populateBoard()
 })
 
-function resetGame() {   
+function resetGame() {
     const minHand = document.getElementById("minute");
     const secHand = document.getElementById("seconds");
     const modal = document.querySelector(".modal-end");
@@ -108,11 +109,11 @@ const populateBoard = () => {
 populateBoard()
 
 function startGame() {
-    console.log(clicked)
-    console.log(gameEnd)
 
     if (clicked == true) {
         return;
+    } else {
+        stepCount = 0;
     }
 
     if (gameEnd == true) {
@@ -151,18 +152,13 @@ function compareCards(currNum) {
     }
 
     if (tempArray.length === 2) {
+        stepCount += 1;
+        console.log(stepCount)
 
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {
             tempArray[0].classList.add('match');
             tempArray[1].classList.add('match');
-           /* setTimeout(() => {
-                tempArray[0].classList.remove('match');
-                tempArray[1].classList.remove('match');
-            }, 300)*/
-           
-            console.log("We have a match");
-            tempArray = [];
-            console.log(count);
+            tempArray = [];           
             endGame();
         } else {
             console.log("No match found");
@@ -209,21 +205,25 @@ function myTimer() {
 
     //Stop timer at 2 minutes;
     if (min >= 2) {
-       // clearInterval(interval);
+        // clearInterval(interval);
         resetGame();
-       /*
-        cards.forEach(elem => {
-            return elem.removeEventListener('click', startGame, false)
-        })
-        */
+        /*
+         cards.forEach(elem => {
+             return elem.removeEventListener('click', startGame, false)
+         })
+         */
     }
 }
 
 function endGame() {
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
     let modalEnd = document.querySelector(".modal-end");
-    const modalClose = document.querySelector(".modalClose");
-    const arrayLength = selectFour === true ? numArray4.length : numArray6.length
+    const setupNewGameButton = document.querySelector(".setup-new-game-button");
+    const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
+    const timeTakenValue = document.querySelector(".time-taken-value");
+    const stepsTakenValue = document.querySelector(".steps-taken-value");
+    const overlay = document.querySelector(".overlay")
+
 
     if (count < arrayLength / 2) {
         count = count + 1;
@@ -231,6 +231,15 @@ function endGame() {
 
     if (count === arrayLength / 2) {
         console.log("Welldone , game ended");
+        stepsTakenValue.innerHTML = stepCount;
+        overlay.classList.add("overlay-show");
+
+        if (sec < 10) {
+            timeTakenValue.innerHTML = `0${min}:0${sec}`;           
+        } else {
+            timeTakenValue.innerHTML = `0${min}:${sec}`;              
+        }
+
         cards.forEach((elem) => {
             if (elem.classList.contains('open-cards')) {
                 return;
@@ -252,7 +261,10 @@ function endGame() {
 
     }
 
-    modalClose.addEventListener("click", function () {
+    setupNewGameButton.addEventListener("click", function () {
+       
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.remove("overlay-show");
         modalEnd.classList.add("hide");
         resetGame()
         reset()

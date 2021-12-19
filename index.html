@@ -87,9 +87,27 @@
 
       </div>
       <div class="modal-end hide">
-        <h1>Congradulations</h1>
+        <h3 class="modal-end-title">You did it!</h3>
+        <p class="modal-end-content">Game over. Here is how you got on...</p>
+
+        <div class="time-taken">
+          <span class="time-taken-label">Time taken</span>
+          <span class="time-taken-value" aria-live="polite"></span>
+        </div>
+
+        <div class="steps-taken">
+          <span class="steps-taken-label">Moves taken</span>
+          <span class="steps-taken-value" aria-live="polite"></span>
+        </div>
+
+
+        <input type="button" value="Restart" class="restart-button" />
+        <input type="button" value="Setup new game" class="setup-new-game-button" />
+
+        <!--
         <div class="congradulations"><i class="fa fa-trophy"></i></div>
-        <input type="button" value="Close" class="modalClose" />
+        -->
+
 
       </div>
     </div>
@@ -102,6 +120,8 @@
       <span id="divider">:</span>
       <span id="seconds">00</span>
     </div>
+
+    <div class="overlay"></div>
   </div>
   <script src="memory.js"></script>
 </body>

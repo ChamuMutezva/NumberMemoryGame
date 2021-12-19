@@ -62,7 +62,7 @@
     --spacer-2: 1.65rem;
     --spacer-3: 2.5rem;
     --spacer-4: 3rem;
-  
+
 
 
     /* ----------------------------------- */
@@ -264,12 +264,12 @@ body {
 }
 
 .secondary-menu {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 90%;
-	margin: auto;
-	max-width: 28rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+    max-width: 28rem;
 }
 
 .control-container {
@@ -285,14 +285,14 @@ legend {
 
 .inputs-wrapper {
     width: 90%;
-   
+
 }
 
 .input-labels {
     display: inline-block;
     background-color: hsl(var(--clr-light-grey));
-    padding-block: var(--spacer-half) ; 
-    padding-inline: var(--spacer-1); 
+    padding-block: var(--spacer-half);
+    padding-inline: var(--spacer-1);
     border-radius: 10px;
     font-size: var(--fs-20);
     font-weight: 700;
@@ -307,7 +307,7 @@ input[type="radio"]:checked+label {
 }
 
 
-.modalClose {
+.setup-new-game-button {
     margin: auto;
 }
 
@@ -358,14 +358,46 @@ h1 {
 
 .modal-end {
     position: absolute;
+    padding: var(--spacer-1);
     width: 320px;
     height: 290px;
-    background-image: radial-gradient(red, brown, silver, black);
+    background-color: hsl(var(--clr-off-white));
+    border-radius: 10px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -53%);
     animation-name: zoomIn;
     animation-duration: 4s;
+    z-index: 2;
+}
+
+.modal-end-title {
+    text-align: center;
+    padding-block: var(--spacer-2);
+}
+
+.modal-end-content {
+    padding-block-end: 1rem;
+}
+
+.time-taken,
+.steps-taken {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+    background-color: hsl(var(--clr-light-grey));
+    padding: var(--spacer-1);
+    border-radius: 10px;
+}
+
+.restart-button {
+    margin-inline: auto;
+    margin-block: 2rem;
+}
+
+.time-taken {
+    margin-block-end: var(--spacer-1);
 }
 
 
@@ -432,4 +464,16 @@ input[type="button"]:hover {
 p {
     text-align: center;
     font-size: large;
+}
+
+.overlay {
+    width: 0;
+}
+
+.overlay-show {
+    background: hsl(var(--clr-light-grey));
+    position: absolute;
+    min-height: 100vh;
+    width: 100%;
+    z-index: 1;
 }
