@@ -110,7 +110,7 @@ populateBoard()
 function startGame() {
     console.log(clicked)
     console.log(gameEnd)
-/*
+
     if (clicked == true) {
         return;
     }
@@ -118,7 +118,7 @@ function startGame() {
     if (gameEnd == true) {
         return;
     }
-*/
+
     selectFour === true ? shuffle(numArray4) : shuffle(numArray6);
     startTimer();
     clicked = true;
@@ -155,6 +155,11 @@ function compareCards(currNum) {
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {
             tempArray[0].classList.add('match');
             tempArray[1].classList.add('match');
+           /* setTimeout(() => {
+                tempArray[0].classList.remove('match');
+                tempArray[1].classList.remove('match');
+            }, 300)*/
+           
             console.log("We have a match");
             tempArray = [];
             console.log(count);
@@ -258,7 +263,7 @@ function endGame() {
 function reset() {
     const minHand = document.getElementById("minute");
     const secHand = document.getElementById("seconds");
-    const modalEnd = document.querySelector(".modal");
+    const modalEnd = document.querySelector(".modalEnd");
     const cards = Array.from(document.querySelectorAll(".gameNum"));
 
 

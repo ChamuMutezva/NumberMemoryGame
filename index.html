@@ -6,16 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Number Memory Game</title>
   <meta name="description" content="" />
-  <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+  <!--  <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="shortcut icon" href="#">
-  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <div class="wrapper">
     <div class="modalStart">
+      <h1>Memory<span class="sr-only"> game</span> </h1>
       <div class="menuCtrlCentre">
         <fieldset>
           <legend>Select theme</legend>
@@ -54,16 +59,16 @@
       </div>
       <button class="modalMenuCtrl">Start Game</button>
     </div>
-    <h1>Memory Game</h1>
-    <p>Press "Start" for game to begin</p>
+    <h2>Memory<span class="sr-only"> game</span> </h2>
+    <p class="sr-only">Press "Start" for game to begin</p>
     <div class="gameCtrl">
       <div class="container">
-        
+
       </div>
-      <div class="modalEnd hide">        
-          <h1>Congradulations</h1>
-          <div class="congradulations"><i class="fa fa-trophy"></i></div>
-          <input type="button" value="Close" class="modalClose" />      
+      <div class="modalEnd hide">
+        <h1>Congradulations</h1>
+        <div class="congradulations"><i class="fa fa-trophy"></i></div>
+        <input type="button" value="Close" class="modalClose" />
 
       </div>
     </div>

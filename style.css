@@ -1,3 +1,46 @@
+/* ----------------------------------- */
+/*          CUSTOM PROPERTIES          */
+/* ------------------------------------*/
+:root {
+    /* colors */
+    --clr-orange: 37 98% 54%;
+    /*orange #FDA214 */
+    --clr-light-grey: 203 28% 79%;
+    /* lt grey #BCCED5 */
+    --clr-med-grey: 205 30% 27%;
+    /*med-grey #304859*/
+    --clr-dark-grey: 206 45% 15%;
+    /*dark-grey #152938*/
+    --clr-off-white: 0 0% 95%;
+    /*off-white #F2F2F2*/
+    --clr-grey-blue: 203 22% 55%;
+    /*grey-blue #7191A5*/
+    --clr-sky-blue: 205 37% 55%;
+    /*sky-blue #6395b8*/
+    --clr-white: 0 0% 99%;
+    /*white #fcfcfc*/
+
+
+    /* font-sizes */
+    --fs-900: 9.375rem;
+    --fs-800: 6.25rem;
+    --fs-700: 3.5rem;
+    --fs-600: 2rem;
+    --fs-500: 1.75rem;
+    --fs-400: 1.125rem;
+    --fs-300: 1rem;
+    --fs-200: 0.875rem;
+
+    /* font-families */
+    --ff-atkinson: 'Atkinson Hyperlegible', sans-serif;
+
+}
+
+
+/* ----------------------------------- */
+/*          RESET                      */
+/* ------------------------------------*/
+
 /* Box sizing rules */
 *,
 *::before,
@@ -85,23 +128,48 @@ select {
 }
 
 
+/* ----------------------------------- */
+/*          UTILITY CLASSES          */
+/* ------------------------------------*/
+
+/* screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    /* added line */
+    border: 0;
+}
+
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: var(--ff-atkinson);
 }
 
 .wrapper {
     position: relative;
+    min-height: 100vh;
+    background-color: hsl(var(--clr-white));
+    color: hsl(var(--clr-dark-grey));
 }
 
 .modalStart {
     position: absolute;
-    background: bisque;
+    background: hsl(var(--clr-dark-grey));
+    color: hsl(var(--clr-white));
     min-height: 100vh;
     width: 100%;
     z-index: 1;
+    display: grid;
+    place-content: center;
 }
 
-.hideModalMenuCtrl, .hide {
+.hideModalMenuCtrl,
+.hide {
     display: none;
 }
 
@@ -109,23 +177,34 @@ body {
     position: relative;
     width: 90%;
     max-width: 490px;
-    background-color: aqua;
+    background-color: hsl(var(--clr-white));
+    border-radius: 10px;
     margin: auto;
     display: grid;
     gap: 0.5rem;
-   
+
 }
 
 .modalClose {
-	margin: auto;
+    margin: auto;
 }
 
 .containerGrid4 {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);   
+}
+
+.containerGrid4 > * {
+   max-width: 72px;
+    height: 72px;
 }
 
 .containerGrid6 {
     grid-template-columns: repeat(6, 1fr);
+}
+
+.containerGrid6 > * { 
+    max-width: 48px;
+    height: 48px;
 }
 
 h1 {
@@ -143,10 +222,10 @@ h1 {
 .gameNum {
     border: 2px solid black;
     text-align: center;
-    /* padding: 1rem;  */ 
-    font-size: 0;
-    height: 72px; 
-    user-select: none;  
+    background-color: hsl(var(--clr-dark-grey));
+    color: hsl(var(--clr-white));
+    font-size: 0;  
+    user-select: none;
     border-radius: 50%;
 }
 
@@ -155,7 +234,7 @@ h1 {
 }
 
 .modalEnd {
-    position: absolute;   
+    position: absolute;
     width: 320px;
     height: 290px;
     background-image: radial-gradient(red, brown, silver, black);
@@ -208,11 +287,11 @@ input[type="button"]:hover {
 
 .openCards {
     font-size: 1rem;
-    background-color: blue;   
+    background-color: hsl(var(--clr-orange));
 }
 
 .match {
-    background-color: blueviolet;
+    background-color: hsl(var(--clr-light-grey));
     transform: translate(1.2);
     transition-duration: 1s;
 }
