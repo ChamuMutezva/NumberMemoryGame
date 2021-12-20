@@ -4,6 +4,7 @@ const numArray6 = [1, 2, 3, 4, 5, 4, 3, 2, 1, 5, 6, 7, 8, 8, 6, 7, 18, 17,
 
 const modalMenuControl = document.querySelector(".modal-menu-control");
 const container = document.querySelector(".container");
+const restartButton = document.querySelector(".restart-button");
 let playBtn = document.getElementById("start-game");
 let resetBtn = document.querySelector(".reset-button");
 let selectFour = true; // grid size selector 4X4 or 6X6
@@ -24,6 +25,12 @@ resetBtn.addEventListener("click", () => {
     document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
     resetGame()
     myTimer();
+})
+
+restartButton.addEventListener("click", () => {
+    document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
+    document.querySelector(".overlay").classList.remove("overlay-show")
+    resetGame()
 })
 
 // hide the modal start screen to start the game
@@ -127,8 +134,7 @@ function startGame() {
     if (clicked) {
         const cards = Array.from(document.querySelectorAll(".game-buttons"));
         cards.forEach((elem, index) => {
-            elem.classList.remove("disable-cards")
-            //  console.log(elem);
+            elem.classList.remove("disable-cards")          
             selectFour === true ? elem.innerHTML = numArray4[index] : elem.innerHTML = numArray6[index];
             elem.addEventListener("click", function (event) {
                 if (elem.classList.contains('open-cards')) {
@@ -158,7 +164,7 @@ function compareCards(currNum) {
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {
             tempArray[0].classList.add('match');
             tempArray[1].classList.add('match');
-            tempArray = [];           
+            tempArray = [];
             endGame();
         } else {
             console.log("No match found");
@@ -204,20 +210,16 @@ function myTimer() {
 
 
     //Stop timer at 2 minutes;
-    if (min >= 2) {
-        // clearInterval(interval);
-        resetGame();
-        /*
-         cards.forEach(elem => {
-             return elem.removeEventListener('click', startGame, false)
-         })
-         */
+    if (min >= 2) {       
+        endGame();
+        // resetGame();
     }
 }
 
 function endGame() {
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
     let modalEnd = document.querySelector(".modal-end");
+    const modalEndContent = document.querySelector(".modal-end-content");
     const setupNewGameButton = document.querySelector(".setup-new-game-button");
     const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
     const timeTakenValue = document.querySelector(".time-taken-value");
@@ -235,9 +237,9 @@ function endGame() {
         overlay.classList.add("overlay-show");
 
         if (sec < 10) {
-            timeTakenValue.innerHTML = `0${min}:0${sec}`;           
+            timeTakenValue.innerHTML = `0${min}:0${sec}`;
         } else {
-            timeTakenValue.innerHTML = `0${min}:${sec}`;              
+            timeTakenValue.innerHTML = `0${min}:${sec}`;
         }
 
         cards.forEach((elem) => {
@@ -259,10 +261,14 @@ function endGame() {
             })
         })
 
+    } else {
+        modalEndContent.innerHTML = "You have lost the game!! Try again";
+        timeTakenValue.innerHTML = `0${min}:${sec}`;
+        stepsTakenValue.innerHTML = stepCount;
+        overlay.classList.add("overlay-show");
     }
 
     setupNewGameButton.addEventListener("click", function () {
-       
         const overlay = document.querySelector(".overlay");
         overlay.classList.remove("overlay-show");
         modalEnd.classList.add("hide");
