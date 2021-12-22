@@ -90,31 +90,28 @@
         <h3 class="modal-end-title">You did it!</h3>
         <p class="modal-end-content">Game over. Here is how you got on...</p>
 
-        <div class="time-taken">
+        <div class="time-taken" aria-live="assertive">
           <span class="time-taken-label">Time taken</span>
-          <span class="time-taken-value" aria-live="polite"></span>
+          <span class="time-taken-value"></span>
         </div>
 
-        <div class="steps-taken">
+        <div class="steps-taken" aria-live="assertive">
           <span class="steps-taken-label">Moves taken</span>
-          <span class="steps-taken-value" aria-live="polite"></span>
+          <span class="steps-taken-value"></span>
         </div>
-
 
         <input type="button" value="Restart" class="restart-button" />
         <input type="button" value="Setup new game" class="setup-new-game-button" />
 
-        <!--
-        <div class="congradulations"><i class="fa fa-trophy"></i></div>
-        -->
-
-
       </div>
     </div>
-    <div class="game-section">
-      <input type="button" value="Start" id="start-game" />
-      <input type="button" value="Reset" class="reset-button" />
+
+    <div class="game-section modal-menu-toggle">
+      <input type="button" value="Restart" class="restart-button game-section-buttons" />     
+      <input type="button" value="Reset" class="reset-button game-section-buttons" />
+      <input type="button" value="Resume game" class="resume-game-button game-section-buttons" />
     </div>
+
     <div class="time-keeper">
       <span id="minute">00</span>
       <span id="divider">:</span>
