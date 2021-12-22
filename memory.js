@@ -55,10 +55,12 @@ function resetGame() {
     const minHand = document.getElementById("minute");
     const secHand = document.getElementById("seconds");
     const modal = document.querySelector(".modal-end");
+    const stepsTaken = document.querySelector(".stepsCount")
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
 
     tempArray = [];
     count = 0;
+    stepCount = 0;
     sec = 0;
     min = 0;
     inProgress = false;
@@ -68,6 +70,7 @@ function resetGame() {
 
     clearInterval(interval);
     modal.classList.add("hide");
+    stepsTaken.innerHTML = `00`
 
     cards.forEach(elem => {
         elem.classList.remove("open-cards")
@@ -170,12 +173,15 @@ function startGame() {
 
 
 function compareCards(currNum) {
+    const stepsTaken = document.querySelector(".stepsCount")
     if (tempArray.length <= 2) { // changed tempArray.length <= 2 to the current
         tempArray.push(currNum);
     }
 
     if (tempArray.length === 2) {
         stepCount += 1;
+        stepCount < 10 ? stepsTaken.innerHTML = `0${stepCount}` :
+            stepsTaken.innerHTML = `${stepCount}`
         console.log(stepCount)
 
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {

@@ -64,7 +64,6 @@
     --spacer-4: 3rem;
 
 
-
     /* ----------------------------------- */
     /*       FONT WEIGHTS                  */
     /* ------------------------------------*/
@@ -174,7 +173,7 @@ fieldset {
 
 
 /* ----------------------------------- */
-/*          UTILITY CLASSES          */
+/*          UTILITY CLASSES           */
 /* ------------------------------------*/
 
 /* screen reader only */
@@ -210,10 +209,39 @@ body {
 
 .flex {
     display: flex;
-    /* place-content: center; */
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.container {
+    position: relative;
+    width: 90%;
+    max-width: 28rem;
+    background-color: hsl(var(--clr-white));
+    border-radius: 10px;
+    margin: auto;
+    display: grid;
+    gap: 0.5rem;
+
+}
+
+.containerGrid4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.containerGrid4>* {
+    max-width: 72px;
+    height: 72px;
+}
+
+.containerGrid6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.containerGrid6>* {
+    max-width: 48px;
+    height: 48px;
 }
 
 .modal-start {
@@ -255,18 +283,6 @@ body {
 .hide-modal-menu-control,
 .hide {
     display: none;
-}
-
-.container {
-    position: relative;
-    width: 90%;
-    max-width: 28rem;
-    background-color: hsl(var(--clr-white));
-    border-radius: 10px;
-    margin: auto;
-    display: grid;
-    gap: 0.5rem;
-
 }
 
 .secondary-menu {
@@ -321,27 +337,13 @@ input[type="radio"]:focus+label {
     cursor: pointer;
 }
 
+.restart-button {
+    margin-block: 1rem;
+    margin-inline: auto;
+}
 
 .setup-new-game-button {
     margin: auto;
-}
-
-.containerGrid4 {
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.containerGrid4>* {
-    max-width: 72px;
-    height: 72px;
-}
-
-.containerGrid6 {
-    grid-template-columns: repeat(6, 1fr);
-}
-
-.containerGrid6>* {
-    max-width: 48px;
-    height: 48px;
 }
 
 h1 {
@@ -392,7 +394,6 @@ h1 {
     position: absolute;
     padding: var(--spacer-1);
     width: 320px;
-    /*   height: 290px; */
     background-color: hsl(var(--clr-off-white));
     border-radius: 10px;
     top: 50%;
@@ -401,6 +402,7 @@ h1 {
     animation-name: zoomIn;
     animation-duration: 4s;
     z-index: 2;
+    padding-block-end: 2rem;
 }
 
 .modal-end-title {
@@ -431,18 +433,6 @@ h1 {
 .time-taken {
     margin-block-end: var(--spacer-1);
 }
-
-@keyframes zoomIn {
-    from {
-        opacity: 0;
-        transform: scale3d(0.3, 0.3, 0.3);
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
 
 input[type="button"] {
     font-size: 1rem;
@@ -486,10 +476,9 @@ input[type="button"].game-section-buttons:focus {
     transition-duration: 1s;
 }
 
-.time-keeper {
-    margin: auto;
+.time-keeper {  
     text-align: center;
-    font-size: xx-large;
+    font-size: var(--fs-22);
 }
 
 p {
@@ -508,4 +497,31 @@ p {
     opacity: 0.95;
     width: 100%;
     z-index: 1;
+}
+
+.time-steps-record {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 25rem;
+    margin-inline: auto;
+    margin-block: 3rem 1rem;
+}
+
+.steps-time-taken {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+    font-size: var(--fs-22);
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
