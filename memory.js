@@ -53,8 +53,10 @@ resetBtn.addEventListener("click", () => {
     document.querySelector(".game-section").classList.add("modal-menu-toggle")
     document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
     document.querySelector(".overlay").classList.remove("overlay-show")
-    resetGame()
-    shufflePlayCards();
+    resetGame()   
+    selectTheme()
+    selectGridSize()
+    shufflePlayCards()
     populateBoard();
     myTimer();
 })
@@ -66,7 +68,7 @@ restartButtons.forEach(restartButton => {
         document.querySelector(".overlay").classList.remove("overlay-show")
         document.querySelector(".game-section").classList.add("modal-menu-toggle")
         resetGame();
-        reStartGame = true;        
+        reStartGame = true;
         startGame();
     })
 
@@ -111,11 +113,17 @@ function resetGame() {
 }
 
 function shufflePlayCards() {
+     shuffle(numArray4)
+     shuffle(numArray6)
+     shuffle(iconArray4)
+     shuffle(iconArray6);
+     /*
+     console.log(selectedTheme) 
     if (selectedTheme === "num") {
         selectFour ? shuffle(numArray4) : shuffle(numArray6);
     } else if (selectedTheme === "icon") {
         selectFour ? shuffle(iconArray4) : shuffle(iconArray6);
-    }
+    }*/
 }
 
 function shuffle(array) {
@@ -145,29 +153,24 @@ const selectTheme = () => {
     for (const theme of themes) {
         if (theme.checked) {
             selectedTheme = theme.value;
-            console.log(theme.value)
-            console.log(theme)
         }
     }
 }
 
 const selectGridSize = () => {
     const gridSize = document.getElementsByName("gridSize")
-
     for (const grid of gridSize) {
         if (grid.checked) {
             selectedGrid = grid.value
-            console.log(grid.value)
         }
     }
-
 
 }
 
 const populateBoard = () => {
-
     selectTheme()
     selectGridSize()
+    shufflePlayCards()
 
     if (selectedTheme === "num") {
 
@@ -206,14 +209,6 @@ const populateBoard = () => {
 
     }
 
-    /*
-    if (selectedTheme === "num") {
-        selectFour ? shuffle(numArray4) : shuffle(numArray6);
-    } else if (selectedTheme === "icon") {
-        selectFour ? shuffle(iconArray4) : shuffle(iconArray6);
-    }
-*/
-
 }
 
 populateBoard()
@@ -230,13 +225,6 @@ function startGame() {
         return;
     }
 
-    /*
-        if (selectedTheme === "num") {
-            selectFour === true ? shuffle(numArray4) : shuffle(numArray6);
-        } else if (selectedTheme === "icon") {
-            selectFour === true ? shuffle(iconArray4) : shuffle(iconArray6);
-        }
-    */
 
     startTimer();
     inProgress = true;
