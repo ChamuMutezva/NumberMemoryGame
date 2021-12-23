@@ -6,9 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Number Memory Game</title>
   <meta name="description" content="" />
+  <!--
   <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+-->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://kit.fontawesome.com/aa55ca4e78.js" crossorigin="anonymous"></script>
   <link rel="shortcut icon" href="#">
+  <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -20,17 +24,20 @@
 <body>
   <div class="wrapper grid">
     <div class="modal-start flex">
+      <div class="fontawesome">
+        
+      </div>
       <h1>Memory<span class="sr-only"> game</span> </h1>
       <div class="menu-control-center flex">
         <fieldset class="inputs-wrapper">
           <legend>Select theme</legend>
 
           <div class="control-container">
-            <input type="radio" name="theme" id="numbers" class="radio-btn">
+            <input type="radio" name="theme" id="numbers" class="radio-btn" value="num" checked>
             <label for="numbers" class="input-labels">Numbers
             </label>
 
-            <input type="radio" name="theme" id="icons" class="radio-btn">
+            <input type="radio" name="theme" id="icons" value="icon" class="radio-btn">
             <label for="icons" class="input-labels">Icons
             </label>
           </div>
@@ -40,7 +47,7 @@
           <legend>Number of players</legend>
 
           <div class="control-container">
-            <input type="radio" name="players" id="one" class="radio-btn">
+            <input type="radio" name="players" id="one" class="radio-btn" checked>
             <label for="one" class="input-labels">1
             </label>
 
@@ -79,8 +86,11 @@
 
     <div class="game-control">
       <div class="secondary-menu">
+        <img src="./assets/logo.svg" alt="">
+        <!--
         <h2 class="game-heading">Memory<span class="sr-only"> game</span> </h2>
-        <button class="seccondary-menu-button">menu</button>
+        -->
+        <button class="secondary-menu-button">menu</button>
       </div>
 
       <div class="container">
@@ -137,3 +147,4 @@
 </body>
 
 </html>
+

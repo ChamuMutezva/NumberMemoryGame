@@ -290,7 +290,8 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 90%;
-    margin: auto;
+    margin-inline: auto;
+    margin-block-end: var(--spacer-2);
     max-width: 28rem;
 }
 
@@ -361,6 +362,7 @@ h1 {
     padding: 1rem;
     transform: translate(-50%, -50%);
     z-index: 2;
+    border-radius: 10px;
 }
 
 .modal-menu-toggle {
@@ -461,12 +463,23 @@ input[type="button"].game-section-buttons:focus {
     background-color: hsl(var(--clr-orange));
 }
 
+.secondary-menu-button {
+    background-color: hsl(var(--clr-orange));
+    font-size: var(--fs-20);
+    color: hsl(var(--clr-white));
+    padding-inline: var(--spacer-1);
+    padding-block: var(--spacer-half);
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
 .modal input[type="button"] {
     margin: auto;
 }
 
 .open-cards {
-    font-size: 1rem;
+    font-size: var(--fs-24);
     background-color: hsl(var(--clr-orange));
 }
 
@@ -483,7 +496,7 @@ input[type="button"].game-section-buttons:focus {
 
 p {
     text-align: center;
-    font-size: large;
+    font-size: var(--fs-18);
 }
 
 .overlay {

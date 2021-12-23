@@ -2,19 +2,45 @@ const numArray4 = [1, 2, 3, 4, 5, 4, 3, 2, 1, 5, 6, 7, 8, 8, 6, 7]; // 4x4 array
 const numArray6 = [1, 2, 3, 4, 5, 4, 3, 2, 1, 5, 6, 7, 8, 8, 6, 7, 18, 17,
     16, 15, 14, 13, 12, 11, 10, 9, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9]; // 6x6 array
 
+const iconArray4 = [
+    `<i class="fas fa-ambulance"></i>`, `<i class="fab fa-accessible-icon"></i>`, `<i class="fab fa-amazon"></i>`,
+    `<i class="fab fa-apple"></i>`, `<i class="fas fa-atlas"></i>`, `<i class="fas fa-balance-scale"></i>`,
+    `<i class="fas fa-bell"></i>`, `<i class="fab fa-blackberry"></i>`, `<i class="fas fa-ambulance"></i>`,
+    `<i class="fab fa-accessible-icon"></i>`, `<i class="fab fa-amazon"></i>`, `<i class="fab fa-apple"></i>`,
+    `<i class="fas fa-atlas"></i>`, `<i class="fas fa-balance-scale"></i>`, `<i class="fas fa-bell"></i>`,
+    `<i class="fab fa-blackberry"></i>`
+]
+
+const iconArray6 = [
+    `<i class="fas fa-ambulance"></i>`, `<i class="fab fa-accessible-icon"></i>`, `<i class="fab fa-amazon"></i>`,
+    `<i class="fab fa-apple"></i>`, `<i class="fas fa-atlas"></i>`, `<i class="fas fa-balance-scale"></i>`,
+    `<i class="fas fa-bell"></i>`, `<i class="fab fa-blackberry"></i>`, `<i class="fas fa-bug"></i>`,
+    `<i class="fas fa-camera"></i>`, `<i class="fab fa-cc-visa"></i>`, `<i class="fas fa-clinic-medical"></i>`,
+    `<i class="fas fa-compass"></i>`, `<i class="fas fa-couch"></i>`, `<i class="far fa-copy"></i>`,
+    `<i class="fas fa-database"></i>`, `<i class="fab fa-git"></i>`, `<i class="fab fa-grunt"></i>`,
+    `<i class="fas fa-ambulance"></i>`, `<i class="fab fa-accessible-icon"></i>`, `<i class="fab fa-amazon"></i>`,
+    `<i class="fab fa-apple"></i>`, `<i class="fas fa-atlas"></i>`, `<i class="fas fa-balance-scale"></i>`,
+    `<i class="fas fa-bell"></i>`, `<i class="fab fa-blackberry"></i>`, `<i class="fas fa-bug"></i>`,
+    `<i class="fas fa-camera"></i>`, `<i class="fab fa-cc-visa"></i>`, `<i class="fas fa-clinic-medical"></i>`,
+    `<i class="fas fa-compass"></i>`, `<i class="fas fa-couch"></i>`, `<i class="far fa-copy"></i>`,
+    `<i class="fas fa-database"></i>`, `<i class="fab fa-git"></i>`, `<i class="fab fa-grunt"></i>`
+]
+
 const modalMenuControl = document.querySelector(".modal-menu-control");
 const container = document.querySelector(".container");
 const restartButtons = document.querySelectorAll(".restart-button");
 let resumeGameBtn = document.querySelector(".resume-game-button");
 let resetBtn = document.querySelector(".reset-button");
 const setupNewGameButton = document.querySelector(".setup-new-game-button");
-const menuSettings = document.querySelector(".seccondary-menu-button");
+const menuSettings = document.querySelector(".secondary-menu-button");
 
 let selectFour = true; // grid size selector 4X4 or 6X6
 let inProgress = false; // to start the game
 let gameEnd = false;
 let reStartGame = false;
 let isPaused = false;
+let selectedTheme = "num";
+let selectedGrid = "";
 
 let tempArray = [];
 let stepCount = 0;
@@ -28,6 +54,8 @@ resetBtn.addEventListener("click", () => {
     document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
     document.querySelector(".overlay").classList.remove("overlay-show")
     resetGame()
+    shufflePlayCards();
+    populateBoard();
     myTimer();
 })
 
@@ -38,17 +66,19 @@ restartButtons.forEach(restartButton => {
         document.querySelector(".overlay").classList.remove("overlay-show")
         document.querySelector(".game-section").classList.add("modal-menu-toggle")
         resetGame();
-        reStartGame = true;
+        reStartGame = true;        
         startGame();
     })
 
 })
+
 // hide the modal start screen to start the game
 modalMenuControl.addEventListener("click", () => {
-    document.querySelector(".modal-start").classList.add("hide-modal-menu-control")
-    container.innerHTML = ""
-    populateBoard()
-    startGame()
+    document.querySelector(".modal-start").classList.add("hide-modal-menu-control");
+    container.innerHTML = "";
+    shufflePlayCards();
+    populateBoard();
+    startGame();
 })
 
 function resetGame() {
@@ -80,6 +110,14 @@ function resetGame() {
 
 }
 
+function shufflePlayCards() {
+    if (selectedTheme === "num") {
+        selectFour ? shuffle(numArray4) : shuffle(numArray6);
+    } else if (selectedTheme === "icon") {
+        selectFour ? shuffle(iconArray4) : shuffle(iconArray6);
+    }
+}
+
 function shuffle(array) {
     let currentIndex = array.length,
         temporaryValue, randomIndex;
@@ -102,31 +140,79 @@ const createBoardElements = (el) => {
     container.appendChild(button)
 }
 
-const populateBoard = () => {
+const selectTheme = () => {
+    const themes = document.getElementsByName("theme")
+    for (const theme of themes) {
+        if (theme.checked) {
+            selectedTheme = theme.value;
+            console.log(theme.value)
+            console.log(theme)
+        }
+    }
+}
+
+const selectGridSize = () => {
     const gridSize = document.getElementsByName("gridSize")
-    gridSize.forEach((grid) => {
-        if (grid.checked === true) {
-            let selectedGrid = grid.value;
-            console.log(selectedGrid)
-            if (selectedGrid === "4") {
-                selectFour = true;
-                container.classList.add("containerGrid4")
-                container.classList.remove("containerGrid6")
-                numArray4.forEach(num => {
-                    createBoardElements(num)
-                })
-            } else {
-                selectFour = false;
-                container.classList.add("containerGrid6")
-                container.classList.remove("containerGrid4")
-                numArray6.forEach(num => {
-                    createBoardElements(num)
-                })
-            }
+
+    for (const grid of gridSize) {
+        if (grid.checked) {
+            selectedGrid = grid.value
+            console.log(grid.value)
+        }
+    }
+
+
+}
+
+const populateBoard = () => {
+
+    selectTheme()
+    selectGridSize()
+
+    if (selectedTheme === "num") {
+
+        if (selectedGrid === "4") {
+            selectFour = true;
+            container.classList.add("containerGrid4")
+            container.classList.remove("containerGrid6")
+            numArray4.forEach(num => {
+                createBoardElements(num)
+            })
+        } else {
+            selectFour = false;
+            container.classList.add("containerGrid6")
+            container.classList.remove("containerGrid4")
+            numArray6.forEach(num => {
+                createBoardElements(num)
+            })
         }
 
+    } else {
+        if (selectedGrid === "4") {
+            selectFour = true;
+            container.classList.add("containerGrid4")
+            container.classList.remove("containerGrid6")
+            iconArray4.forEach(icon => {
+                createBoardElements(icon)
+            })
+        } else {
+            selectFour = false;
+            container.classList.add("containerGrid6")
+            container.classList.remove("containerGrid4")
+            iconArray6.forEach(icon => {
+                createBoardElements(icon)
+            })
+        }
 
-    })
+    }
+
+    /*
+    if (selectedTheme === "num") {
+        selectFour ? shuffle(numArray4) : shuffle(numArray6);
+    } else if (selectedTheme === "icon") {
+        selectFour ? shuffle(iconArray4) : shuffle(iconArray6);
+    }
+*/
 
 }
 
@@ -144,9 +230,13 @@ function startGame() {
         return;
     }
 
-    if (reStartGame === false) {
-        selectFour === true ? shuffle(numArray4) : shuffle(numArray6);
-    }
+    /*
+        if (selectedTheme === "num") {
+            selectFour === true ? shuffle(numArray4) : shuffle(numArray6);
+        } else if (selectedTheme === "icon") {
+            selectFour === true ? shuffle(iconArray4) : shuffle(iconArray6);
+        }
+    */
 
     startTimer();
     inProgress = true;
@@ -155,7 +245,7 @@ function startGame() {
         const cards = Array.from(document.querySelectorAll(".game-buttons"));
         cards.forEach((elem, index) => {
             elem.classList.remove("disable-cards")
-            selectFour === true ? elem.innerHTML = numArray4[index] : elem.innerHTML = numArray6[index];
+            //selectFour === true ? elem.innerHTML = numArray4[index] : elem.innerHTML = numArray6[index];
             elem.addEventListener("click", function (event) {
                 if (elem.classList.contains('open-cards')) {
                     // console.log('Card already opened, click another card');
@@ -235,7 +325,7 @@ function myTimer() {
         [minHand.innerHTML = `0${min}`, secHand.innerHTML = `${sec}`, fullTime = `0${min}:${sec}`]
 
     //Stop timer at 2 minutes;
-    if (min >= 2) {
+    if (min >= 5) {
         let totalSeconds = (min * 60) + sec
         console.log(totalSeconds)
         resetGame();
@@ -328,3 +418,31 @@ const resumePausedGame = () => {
     isPaused ? [clearInterval(interval), overLay.classList.add("overlay-show")] :
         [interval = setInterval(myTimer, 1000), overLay.classList.remove("overlay-show")];
 }
+
+
+/*
+    const gridSize = document.getElementsByName("gridSize")
+    console.log(selctedTheme)
+    gridSize.forEach((grid) => {
+        if (grid.checked === true) {
+            let selectedGrid = grid.value;
+            console.log(selectedGrid)
+            if (selectedGrid === "4") {
+                selectFour = true;
+                container.classList.add("containerGrid4")
+                container.classList.remove("containerGrid6")
+                numArray4.forEach(num => {
+                    createBoardElements(num)
+                })
+            } else {
+                selectFour = false;
+                container.classList.add("containerGrid6")
+                container.classList.remove("containerGrid4")
+                numArray6.forEach(num => {
+                    createBoardElements(num)
+                })
+            }
+        }
+    })
+*/
+
