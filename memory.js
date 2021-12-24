@@ -318,16 +318,18 @@ function myTimer() {
 
     //Stop timer at 5 minutes;
     if (min >= 5) {
-        let totalSeconds = (min * 60) + sec
+        let totalSeconds = (min * 60) + sec;
+        const tempStepCount = stepCount;
         console.log(totalSeconds)
+        resetGame();
         //  endGame();
         modalEnd.classList.remove("hide");
         modalEndTitle.innerHTML = "Game over. Mission not complete";
         modalEndContent.innerHTML = "Better lucky next time";
-        stepsTakenValue.innerHTML = stepCount;
+        stepsTakenValue.innerHTML = tempStepCount;
         timeTakenValue.innerHTML = fullTime;
         overlay.classList.add("overlay-show");
-        resetGame();
+        
     }
 
 }
