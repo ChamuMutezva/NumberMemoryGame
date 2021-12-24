@@ -1,0 +1,23 @@
+{
+  "name": "number-memory-game",
+  "version": "1.0.0",
+  "description": "![Design preview for the Memory game coding challenge](./preview.jpg)",
+  "main": "memory.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChamuMutezva/NumberMemoryGame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChamuMutezva/NumberMemoryGame/issues"
+  },
+  "homepage": "https://github.com/ChamuMutezva/NumberMemoryGame#readme",
+  "dependencies": {
+    "realm-web": "^1.5.1"
+  }
+}

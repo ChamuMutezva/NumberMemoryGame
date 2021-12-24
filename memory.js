@@ -53,7 +53,7 @@ resetBtn.addEventListener("click", () => {
     document.querySelector(".game-section").classList.add("modal-menu-toggle")
     document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
     document.querySelector(".overlay").classList.remove("overlay-show")
-    resetGame()   
+    resetGame()
     selectTheme()
     selectGridSize()
     shufflePlayCards()
@@ -113,26 +113,33 @@ function resetGame() {
 }
 
 function shufflePlayCards() {
-     shuffle(numArray4)
-     shuffle(numArray6)
-     shuffle(iconArray4)
-     shuffle(iconArray6);
-     /*
-     console.log(selectedTheme) 
-    if (selectedTheme === "num") {
-        selectFour ? shuffle(numArray4) : shuffle(numArray6);
-    } else if (selectedTheme === "icon") {
-        selectFour ? shuffle(iconArray4) : shuffle(iconArray6);
-    }*/
+    shuffle(numArray4)
+    shuffle(numArray6)
+    shuffle(iconArray4)
+    shuffle(iconArray6);
+    /*
+    console.log(selectedTheme) 
+   if (selectedTheme === "num") {
+       selectFour ? shuffle(numArray4) : shuffle(numArray6);
+   } else if (selectedTheme === "icon") {
+       selectFour ? shuffle(iconArray4) : shuffle(iconArray6);
+   }*/
 }
 
+// Shuffle function from http://stackoverflow.com/a/2450976
+// inspiration drawn from https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
 function shuffle(array) {
     let currentIndex = array.length,
         temporaryValue, randomIndex;
 
+        // While there remain elements to shuffle...
     while (currentIndex !== 0) {
+
+        // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
+
+        // And swap it with the current element.
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
@@ -235,8 +242,7 @@ function startGame() {
             elem.classList.remove("disable-cards")
             //selectFour === true ? elem.innerHTML = numArray4[index] : elem.innerHTML = numArray6[index];
             elem.addEventListener("click", function (event) {
-                if (elem.classList.contains('open-cards')) {
-                    // console.log('Card already opened, click another card');
+                if (elem.classList.contains('open-cards')) {                   
                     return;
                 } else {
                     elem.classList.add('open-cards');
@@ -301,9 +307,7 @@ function myTimer() {
     const secHand = document.getElementById("seconds");
     let fullTime = 0;
 
-    // const cards = Array.from(document.querySelectorAll(".game-buttons"));
     sec++;
-
     if (sec > 59) {
         min++;
         sec = 0;
@@ -312,11 +316,10 @@ function myTimer() {
     sec < 10 ? [minHand.innerHTML = `0${min}`, secHand.innerHTML = `0${sec}`, fullTime = `0${min}:0${sec}`] :
         [minHand.innerHTML = `0${min}`, secHand.innerHTML = `${sec}`, fullTime = `0${min}:${sec}`]
 
-    //Stop timer at 2 minutes;
+    //Stop timer at 5 minutes;
     if (min >= 5) {
         let totalSeconds = (min * 60) + sec
         console.log(totalSeconds)
-        resetGame();
         //  endGame();
         modalEnd.classList.remove("hide");
         modalEndTitle.innerHTML = "Game over. Mission not complete";
@@ -324,6 +327,7 @@ function myTimer() {
         stepsTakenValue.innerHTML = stepCount;
         timeTakenValue.innerHTML = fullTime;
         overlay.classList.add("overlay-show");
+        resetGame();
     }
 
 }
@@ -331,20 +335,19 @@ function myTimer() {
 function endGame() {
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
     const modalEnd = document.querySelector(".modal-end");
-    const modalEndContent = document.querySelector(".modal-end-content");
+    // const modalEndContent = document.querySelector(".modal-end-content");
     const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
     const timeTakenValue = document.querySelector(".time-taken-value");
     const stepsTakenValue = document.querySelector(".steps-taken-value");
     const overlay = document.querySelector(".overlay");
-    let totalSeconds = (min * 60) + sec
-    console.log(totalSeconds)
+    // let totalSeconds = (min * 60) + sec
 
     if (count < arrayLength / 2) {
         count = count + 1;
     }
 
     if (count === arrayLength / 2) {
-        console.log("Welldone , game ended");
+        // console.log("Welldone , game ended");
         stepsTakenValue.innerHTML = stepCount;
         overlay.classList.add("overlay-show");
 
@@ -359,15 +362,14 @@ function endGame() {
                 return;
             } else {
                 elem.classList.add('open-cards');
-                console.log(elem);
             }
 
         })
+
         inProgress = false;
         gameEnd = true;
         clearInterval(interval);
         modalEnd.classList.toggle("hide");
-
 
         cards.forEach(elem => {
             elem.removeEventListener('click', function (event) {
@@ -403,34 +405,20 @@ const resumePausedGame = () => {
     document.querySelector(".game-section").classList.toggle("modal-menu-toggle");
     isPaused = !isPaused;
     console.log(isPaused)
-    isPaused ? [clearInterval(interval), overLay.classList.add("overlay-show")] :
+    isPaused ?
+        [clearInterval(interval), overLay.classList.add("overlay-show")] :
         [interval = setInterval(myTimer, 1000), overLay.classList.remove("overlay-show")];
 }
 
 
 /*
-    const gridSize = document.getElementsByName("gridSize")
-    console.log(selctedTheme)
-    gridSize.forEach((grid) => {
-        if (grid.checked === true) {
-            let selectedGrid = grid.value;
-            console.log(selectedGrid)
-            if (selectedGrid === "4") {
-                selectFour = true;
-                container.classList.add("containerGrid4")
-                container.classList.remove("containerGrid6")
-                numArray4.forEach(num => {
-                    createBoardElements(num)
-                })
-            } else {
-                selectFour = false;
-                container.classList.add("containerGrid6")
-                container.classList.remove("containerGrid4")
-                numArray6.forEach(num => {
-                    createBoardElements(num)
-                })
-            }
-        }
-    })
-*/
+
+const app = new Realm.App({ id: "<Your App ID>" });
+const credentials = Realm.Credentials.anonymous();
+try {
+  const user = await app.logIn(credentials);
+} catch(err) {
+  console.error("Failed to log in", err);
+}
+    */
 
