@@ -41,10 +41,11 @@ let reStartGame = false;
 let isPaused = false;
 let selectedTheme = "num";
 let selectedGrid = "";
+let selectedPlayer = 1;
 
-let tempArray = [];
-let stepCount = 0;
-let count = 0;
+let tempArray = []; // to hold a max of 2 cards to be matched and reset to empty. 
+let stepCount = 0; // count the number of moves during the game
+let count = 0; // used to find if all combinations has been meet to win the game at (array.length / 2)
 let sec = 0;
 let min = 0;
 let interval;
@@ -74,7 +75,6 @@ restartButtons.forEach(restartButton => {
 
 })
 
-// hide the modal start screen to start the game
 modalMenuControl.addEventListener("click", () => {
     document.querySelector(".modal-start").classList.add("hide-modal-menu-control");
     container.innerHTML = "";
@@ -102,7 +102,7 @@ function resetGame() {
 
     clearInterval(interval);
     modal.classList.add("hide");
-    stepsTaken.innerHTML = `00`
+    stepsTaken == ! null ? stepsTaken.innerHTML = `00` : null;
 
     cards.forEach(elem => {
         elem.classList.remove("open-cards")
@@ -132,7 +132,7 @@ function shuffle(array) {
     let currentIndex = array.length,
         temporaryValue, randomIndex;
 
-        // While there remain elements to shuffle...
+    // While there remain elements to shuffle...
     while (currentIndex !== 0) {
 
         // Pick a remaining element...
@@ -155,6 +155,71 @@ const createBoardElements = (el) => {
     container.appendChild(button)
 }
 
+const singlePlayerTemplate =
+    `<div class="time-keeper">
+        <h3 class="time-title">Time</h3>
+        <div class="time-record">
+             <span id="minute">00</span>
+             <span id="divider">:</span>
+             <span id="seconds">00</span>
+        </div>
+     </div>
+     <div class="steps-time-taken">
+          <h3 class="steps-title">Moves</h3>
+          <span class="stepsCount">00</span>
+      </div>`
+
+const doublePlayerTemplate =
+    `<div class="players flex2">
+         <h3 class="sr-only">2 players involved in this game</h3>
+         <div class="player player1">
+             <h4>P1</h4>
+             <p class="score score1">0</p>
+         </div>
+         <div class="player player2">
+             <h4>P2</h4>
+             <p class="score score2">0</p>
+         </div>
+    </div>`
+
+    const triplePlayerTemplate =
+    `<div class="players flex2">
+         <h3 class="sr-only">2 players involved in this game</h3>
+         <div class="player player1">
+             <h4>P1</h4>
+             <p class="score score1">0</p>
+         </div>
+         <div class="player player2">
+             <h4>P2</h4>
+             <p class="score score2">0</p>
+         </div>
+         <div class="player player3">
+             <h4>P3</h4>
+             <p class="score score2">0</p>
+         </div>
+    </div>`
+
+    const quadPlayerTemplate =
+    `<div class="players flex2">
+         <h3 class="sr-only">2 players involved in this game</h3>
+         <div class="player player1">
+             <h4>P1</h4>
+             <p class="score score1">0</p>
+         </div>
+         <div class="player player2">
+             <h4>P2</h4>
+             <p class="score score2">0</p>
+         </div>
+         <div class="player player3">
+             <h4>P3</h4>
+             <p class="score score2">0</p>
+         </div>
+         <div class="player player4">
+             <h4>P4</h4>
+             <p class="score score2">0</p>
+         </div>
+    </div>`
+
 const selectTheme = () => {
     const themes = document.getElementsByName("theme")
     for (const theme of themes) {
@@ -174,10 +239,22 @@ const selectGridSize = () => {
 
 }
 
+const selectNumPlayers = () => {
+    const players = document.getElementsByName("players");
+
+    for (const player of players) {
+        if (player.checked) {
+            selectedPlayer = parseInt(player.value)
+        }
+    }
+    console.log(selectedPlayer)
+}
+
 const populateBoard = () => {
     selectTheme()
     selectGridSize()
     shufflePlayCards()
+    selectNumPlayers()
 
     if (selectedTheme === "num") {
 
@@ -221,6 +298,7 @@ const populateBoard = () => {
 populateBoard()
 
 function startGame() {
+    const timeStepsRecord = document.querySelector(".time-steps-record");
 
     if (inProgress == true) {
         return;
@@ -232,17 +310,29 @@ function startGame() {
         return;
     }
 
+    if (selectedPlayer === 1) {
+        timeStepsRecord.innerHTML = singlePlayerTemplate;
+        startTimer();
+        inProgress = true;
+        playGame()
+    } else if (selectedPlayer === 2) {
+        timeStepsRecord.innerHTML = doublePlayerTemplate;
+    } else if (selectedPlayer === 3) {
+        timeStepsRecord.innerHTML = triplePlayerTemplate;
+    } else if (selectedPlayer === 4) {
+        timeStepsRecord.innerHTML = quadPlayerTemplate;
+    }
 
-    startTimer();
-    inProgress = true;
 
+}
+
+const playGame = () => {
     if (inProgress) {
         const cards = Array.from(document.querySelectorAll(".game-buttons"));
-        cards.forEach((elem, index) => {
+        cards.forEach((elem) => {
             elem.classList.remove("disable-cards")
-            //selectFour === true ? elem.innerHTML = numArray4[index] : elem.innerHTML = numArray6[index];
             elem.addEventListener("click", function (event) {
-                if (elem.classList.contains('open-cards')) {                   
+                if (elem.classList.contains('open-cards')) {
                     return;
                 } else {
                     elem.classList.add('open-cards');
@@ -252,7 +342,6 @@ function startGame() {
 
         })
     }
-
 }
 
 
@@ -313,7 +402,13 @@ function myTimer() {
         sec = 0;
     }
 
-    sec < 10 ? [minHand.innerHTML = `0${min}`, secHand.innerHTML = `0${sec}`, fullTime = `0${min}:0${sec}`] :
+    // minHand and secHand can be null if the singleTemplate was not selected 
+    if (minHand === null || secHand === null) {
+        return
+    }
+
+    sec < 10 ?
+        [minHand.innerHTML = `0${min}`, secHand.innerHTML = `0${sec}`, fullTime = `0${min}:0${sec}`] :
         [minHand.innerHTML = `0${min}`, secHand.innerHTML = `${sec}`, fullTime = `0${min}:${sec}`]
 
     //Stop timer at 5 minutes;
@@ -329,7 +424,7 @@ function myTimer() {
         stepsTakenValue.innerHTML = tempStepCount;
         timeTakenValue.innerHTML = fullTime;
         overlay.classList.add("overlay-show");
-        
+
     }
 
 }
@@ -337,7 +432,8 @@ function myTimer() {
 function endGame() {
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
     const modalEnd = document.querySelector(".modal-end");
-    // const modalEndContent = document.querySelector(".modal-end-content");
+    const modalEndContent = document.querySelector(".modal-end-content");
+    const modalEndTitle = document.querySelector(".modal-end-title");
     const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
     const timeTakenValue = document.querySelector(".time-taken-value");
     const stepsTakenValue = document.querySelector(".steps-taken-value");
@@ -351,6 +447,8 @@ function endGame() {
     if (count === arrayLength / 2) {
         // console.log("Welldone , game ended");
         stepsTakenValue.innerHTML = stepCount;
+        modalEndTitle.innerHTML = "Game over. here is how you did it...";
+        modalEndContent.innerHTML = "You are a winner!!";
         overlay.classList.add("overlay-show");
 
         if (sec < 10) {

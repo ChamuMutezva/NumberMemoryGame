@@ -21,22 +21,22 @@
 </head>
 
 <body>
-  <div class="wrapper grid">
+  <main class="wrapper grid">
     <div class="modal-start flex">
-      <img src="./assets/logo.svg" alt="" class="logo">
-      <h1 class="sr-only">Memory game</h1>
+      <img src="./assets/logo.svg" alt="" class="logo" aria-hidden="true">
+      <h1 class="sr-only">Memory number and picture game</h1>
       <div class="menu-control-center flex">
         <fieldset class="inputs-wrapper">
           <legend>Select theme</legend>
 
           <div class="control-container">
+
             <input type="radio" name="theme" id="numbers" class="radio-btn" value="num" checked>
-            <label for="numbers" class="input-labels">Numbers
-            </label>
+            <label for="numbers" class="input-labels">Numbers </label>
 
             <input type="radio" name="theme" id="icons" value="icon" class="radio-btn">
-            <label for="icons" class="input-labels">Icons
-            </label>
+            <label for="icons" class="input-labels">Icons </label>
+
           </div>
         </fieldset>
 
@@ -44,21 +44,19 @@
           <legend>Number of players</legend>
 
           <div class="control-container">
-            <input type="radio" name="players" id="one" class="radio-btn" checked>
-            <label for="one" class="input-labels">1
-            </label>
 
-            <input type="radio" name="players" id="two" class="radio-btn">
-            <label for="two" class="input-labels">2
-            </label>
+            <input type="radio" name="players" id="one" value="1" class="radio-btn" checked>
+            <label for="one" class="input-labels">1 </label>
 
-            <input type="radio" name="players" id="three" class="radio-btn">
-            <label for="three" class="input-labels">3
-            </label>
+            <input type="radio" name="players" id="two" value="2" class="radio-btn">
+            <label for="two" class="input-labels">2 </label>
 
-            <input type="radio" name="players" id="four" class="radio-btn">
-            <label for="four" class="input-labels">4
-            </label>
+            <input type="radio" name="players" id="three" value="3" class="radio-btn">
+            <label for="three" class="input-labels">3 </label>
+
+            <input type="radio" name="players" id="four" value="4" class="radio-btn">
+            <label for="four" class="input-labels">4 </label>
+
           </div>
 
         </fieldset>
@@ -68,12 +66,11 @@
           <div class="control-container">
 
             <input type="radio" name="gridSize" id="four-by-four" value="4" checked class="radio-btn">
-            <label for="four-by-four" class="input-labels">4X4
-            </label>
+            <label for="four-by-four" class="input-labels">4X4 </label>
 
             <input type="radio" name="gridSize" value="6" id="six-by-six" class="radio-btn">
-            <label for="six-by-six" class="input-labels">6X6
-            </label>
+            <label for="six-by-six" class="input-labels">6X6 </label>
+
           </div>
         </fieldset>
         <button class="modal-menu-control">Start Game</button>
@@ -82,16 +79,14 @@
     </div>
 
     <div class="game-control">
+      <h2 class="sr-only">memory game play center</h2>
       <div class="secondary-menu">
-        <img src="./assets/logo.svg" alt="">
-        <!--
-        <h2 class="game-heading">Memory<span class="sr-only"> game</span> </h2>
-        -->
+        <img src="./assets/logo.svg" alt="" aria-hidden="true">       
         <button class="secondary-menu-button">menu</button>
       </div>
 
       <div class="container">
-
+          <!--CARDS TO BE PLACED HERE USING JS-->
       </div>
       <div class="modal-end hide">
         <h3 class="modal-end-title">You did it!</h3>
@@ -120,26 +115,11 @@
     </div>
 
     <div class="time-steps-record">
-      <div class="time-keeper">
-        <h3 class="time-title">Time</h3>
-        <div class="time-record">
-          <span id="minute">00</span>
-          <span id="divider">:</span>
-          <span id="seconds">00</span>
-        </div>
-      </div>
-      <div class="steps-time-taken">
-        <h3 class="steps-title">
-          Moves
-        </h3>
-        <span class="stepsCount">
-          00
-        </span>
-      </div>
+      
     </div>
 
     <div class="overlay"></div>
-  </div>
+  </main>
   <script src="memory.js"></script>
 </body>
 
