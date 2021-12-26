@@ -43,6 +43,11 @@ let selectedTheme = "num";
 let selectedGrid = "";
 let selectedPlayer = 1;
 
+let lonePlayer = true;
+let doublePlayer = false;
+let trioPlayer = false;
+let quadPlayer = false;
+
 let tempArray = []; // to hold a max of 2 cards to be matched and reset to empty. 
 let stepCount = 0; // count the number of moves during the game
 let count = 0; // used to find if all combinations has been meet to win the game at (array.length / 2)
@@ -172,7 +177,7 @@ const singlePlayerTemplate =
 const doublePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
-         <div class="player player1">
+         <div class="player player1 active-player">
              <h4>P1</h4>
              <p class="score score1">0</p>
          </div>
@@ -182,10 +187,10 @@ const doublePlayerTemplate =
          </div>
     </div>`
 
-    const triplePlayerTemplate =
+const triplePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
-         <div class="player player1">
+         <div class="player player1 active-player">
              <h4>P1</h4>
              <p class="score score1">0</p>
          </div>
@@ -199,10 +204,10 @@ const doublePlayerTemplate =
          </div>
     </div>`
 
-    const quadPlayerTemplate =
+const quadPlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
-         <div class="player player1">
+         <div class="player player1 active-player">
              <h4>P1</h4>
              <p class="score score1">0</p>
          </div>
@@ -314,13 +319,36 @@ function startGame() {
         timeStepsRecord.innerHTML = singlePlayerTemplate;
         startTimer();
         inProgress = true;
+        lonePlayer = true;
+        doublePlayer = false;
+        trioPlayer = false;
+        quadPlayer = false;
         playGame()
     } else if (selectedPlayer === 2) {
+        console.log(selectedPlayer)
         timeStepsRecord.innerHTML = doublePlayerTemplate;
+        inProgress = true;
+        lonePlayer = false;
+        doublePlayer = true;
+        trioPlayer = false;
+        quadPlayer = false;
+        playGame();
     } else if (selectedPlayer === 3) {
         timeStepsRecord.innerHTML = triplePlayerTemplate;
+        inProgress = true;
+        lonePlayer = false;
+        doublePlayer = false;
+        trioPlayer = true;
+        quadPlayer = false;
+        playGame();
     } else if (selectedPlayer === 4) {
         timeStepsRecord.innerHTML = quadPlayerTemplate;
+        inProgress = true;
+        lonePlayer = false;
+        doublePlayer = false;
+        trioPlayer = false;
+        quadPlayer = true;
+        playGame();
     }
 
 
@@ -344,19 +372,50 @@ const playGame = () => {
     }
 }
 
+const stepsTimerChecker = (numberOfSteps) => {
+    const stepsTaken = document.querySelector(".stepsCount")
+    numberOfSteps < 10 ? stepsTaken.innerHTML = `0${numberOfSteps}` :
+        stepsTaken.innerHTML = `${numberOfSteps}`
+}
+
+const numberOfPlayers = () => {
+    const players = Array.from(document.querySelectorAll(".player"));
+    console.log(players);
+}
 
 function compareCards(currNum) {
-    const stepsTaken = document.querySelector(".stepsCount")
     if (tempArray.length <= 2) { // changed tempArray.length <= 2 to the current
         tempArray.push(currNum);
     }
 
     if (tempArray.length === 2) {
         stepCount += 1;
-        stepCount < 10 ? stepsTaken.innerHTML = `0${stepCount}` :
+
+        if (lonePlayer) {
+            stepsTimerChecker(stepCount);
+            numberOfPlayers();
+        }
+
+        if (doublePlayer) {
+            console.log("two players involved")
+            numberOfPlayers()
+        }
+
+        if (trioPlayer) {
+            console.log("three players battling it out")
+            numberOfPlayers()
+        }
+
+        if (quadPlayer) {
+            console.log("four people game")
+            numberOfPlayers()
+        }
+        /*
+
+        stepCount < 10 ? stepsTaken && (stepsTaken.innerHTML = `0${stepCount}`) :
             stepsTaken.innerHTML = `${stepCount}`
         console.log(stepCount)
-
+        */
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {
             tempArray[0].classList.add('match');
             tempArray[1].classList.add('match');

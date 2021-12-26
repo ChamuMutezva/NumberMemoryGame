@@ -564,8 +564,12 @@ p {
 .player {
 	background-color: hsl(var(--clr-light-grey));
 	padding: 1rem;
-	border: 10px;
+	border-radius: 10px;
 	
+}
+
+.active-player {
+    background-color: hsl(var(--clr-orange));
 }
 
 @keyframes zoomIn {
