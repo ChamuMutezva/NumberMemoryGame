@@ -589,6 +589,22 @@ p {
     text-align: center;
 }
 
+.multiple-player-results {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+    padding-block: var(--spacer-1);
+    padding-inline: var(--spacer-half);
+    background-color: hsl(var(--clr-white));
+    margin-block-end: var(--spacer-2);
+    border-radius: 10px;
+}
+
+.winning-player {
+    background-color: hsl(var(--clr-dark-grey));
+    color: hsl(var(--clr-white));
+}
+
 @keyframes zoomIn {
     from {
         opacity: 0;

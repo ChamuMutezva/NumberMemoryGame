@@ -103,6 +103,7 @@ function resetGame() {
     const modal = document.querySelector(".modal-end");
     const stepsTaken = document.querySelector(".stepsCount")
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
+    const scoreElement = Array.from(document.querySelectorAll(".score"))
 
     tempArray = [];
     count = 0;
@@ -114,6 +115,11 @@ function resetGame() {
     reStartGame = false;
     isPaused = false;
 
+    scorecard.player1 = 0;
+    scorecard.player2 = 0;
+    scorecard.player3 = 0;
+    scorecard.player4 = 0;
+
     clearInterval(interval);
     modal.classList.add("hide");
     stepsTaken == ! null ? stepsTaken.innerHTML = `00` : null;
@@ -123,6 +129,8 @@ function resetGame() {
         elem.classList.remove("match")
         elem.classList.add("disable-cards")
     })
+
+    scoreElement.forEach(elm => elm.innerHTML = 0)
 
 }
 
@@ -399,31 +407,28 @@ const numberOfPlayers = () => {
         tempIndex += 1;
     } else {
         tempIndex = 0
-    }
-    console.log(tempIndex)
+    }   
     players[tempIndex].classList.add("active-player")
 }
 
 const playersScore = () => {
-    const players = Array.from(document.querySelectorAll(".player"));
-    let targetDiv;
-    let id;
-    let calcID;
-    for (const player of players) {
-        if (player.classList.contains("active-player")) {
-            targetDiv = player;
-            id = targetDiv.getAttribute("data-id")
+    if (!lonePlayer) {
+        const players = Array.from(document.querySelectorAll(".player"));
+        let targetDiv;
+        let id;
+        let calcID;
+        for (const player of players) {
+            if (player.classList.contains("active-player")) {
+                targetDiv = player;
+                id = targetDiv.getAttribute("data-id")
+            }
         }
-    }
 
-    const scoreUpdate = document.querySelector(`.score${id}`)
-    calcID = `player${id}`
-    console.log(calcID)
-    scorecard[calcID] = scorecard[calcID] += 1
-    console.log(scorecard)
-    console.log(targetDiv)
-    console.log(id)
-    scoreUpdate.innerHTML = scorecard[calcID]
+        const scoreUpdate = document.querySelector(`.score${id}`)
+        calcID = `player${id}`       
+        scorecard[calcID] = scorecard[calcID] += 1       
+        scoreUpdate.innerHTML = scorecard[calcID]
+    }
 }
 
 function compareCards(currNum) {
@@ -436,29 +441,21 @@ function compareCards(currNum) {
 
         if (lonePlayer) {
             stepsTimerChecker(stepCount);
-            // numberOfPlayers();
-        }
-
-        if (doublePlayer) {
-            console.log("two players involved")
-            //  numberOfPlayers()
-        }
-
-        if (trioPlayer) {
-            console.log("three players battling it out")
-            //  numberOfPlayers()
-        }
-
-        if (quadPlayer) {
-            console.log("four people game")
-            // numberOfPlayers()
         }
         /*
+               if (doublePlayer) {
+                   console.log("two players involved")           
+               }
+       
+               if (trioPlayer) {
+                   console.log("three players battling it out")            
+               }
+       
+               if (quadPlayer) {
+                   console.log("four people game")           
+               }
+               */
 
-        stepCount < 10 ? stepsTaken && (stepsTaken.innerHTML = `0${stepCount}`) :
-            stepsTaken.innerHTML = `${stepCount}`
-        console.log(stepCount)
-        */
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {
             tempArray[0].classList.add('match');
             tempArray[1].classList.add('match');
@@ -473,7 +470,10 @@ function compareCards(currNum) {
                 tempArray[1].classList.toggle('open-cards');
                 tempArray = [];
             }, 500);
-            numberOfPlayers()
+            if (lonePlayer === false) {
+                numberOfPlayers()
+            }
+
         }
 
     }
@@ -517,9 +517,8 @@ function myTimer() {
 
     //Stop timer at 5 minutes;
     if (min >= 5) {
-        let totalSeconds = (min * 60) + sec;
+        // let totalSeconds = (min * 60) + sec;
         const tempStepCount = stepCount;
-        console.log(totalSeconds)
         resetGame();
         //  endGame();
         modalEnd.classList.remove("hide");
@@ -536,30 +535,89 @@ function myTimer() {
 function endGame() {
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
     const modalEnd = document.querySelector(".modal-end");
-    const modalEndContent = document.querySelector(".modal-end-content");
-    const modalEndTitle = document.querySelector(".modal-end-title");
+    const gameResults = document.querySelector(".game-results")
+    // const modalEndContent = document.querySelector(".modal-end-content");
+    // const modalEndTitle = document.querySelector(".modal-end-title");
     const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
-    const timeTakenValue = document.querySelector(".time-taken-value");
-    const stepsTakenValue = document.querySelector(".steps-taken-value");
+    // const timeTakenValue = document.querySelector(".time-taken-value");
+    //const stepsTakenValue = document.querySelector(".steps-taken-value");
+    let timeMessage = ""
     const overlay = document.querySelector(".overlay");
     // let totalSeconds = (min * 60) + sec
-
+    // gameResults.innerHTML = ""
     if (count < arrayLength / 2) {
         count = count + 1;
     }
 
+    if (sec < 10) {
+        timeMessage = `0${min}:0${sec}`;
+    } else {
+        timeMessage = `0${min}:${sec}`;
+    }
+
     if (count === arrayLength / 2) {
         // console.log("Welldone , game ended");
-        stepsTakenValue.innerHTML = stepCount;
-        modalEndTitle.innerHTML = "Game over. here is how you did it...";
-        modalEndContent.innerHTML = "You are a winner!!";
-        overlay.classList.add("overlay-show");
+        if (lonePlayer) {
+            gameResults.innerHTML = ` <h3 class="modal-end-title">You did it!</h3>
+           <p class="modal-end-content">Game over. Here is how you got on...</p>
+           <div class="time-taken" aria-live="assertive">
+                  <span class="time-taken-label">Time taken</span>
+                  <span class="time-taken-value">${timeMessage}</span>
+           </div>
+           <div class="steps-taken" aria-live="assertive">
+                  <span class="steps-taken-label">Moves taken</span>
+                  <span class="steps-taken-value">${stepCount}</span>
+           </div>
+      `
 
-        if (sec < 10) {
-            timeTakenValue.innerHTML = `0${min}:0${sec}`;
-        } else {
-            timeTakenValue.innerHTML = `0${min}:${sec}`;
+            overlay.classList.add("overlay-show");
+
+            // stepsTakenValue.innerHTML = stepCount;
+            /* 
+             modalEndTitle.innerHTML = "Game over. here is how you did it...";
+             modalEndContent.innerHTML = "You are a winner!!";
+             */
+
         }
+        else {
+            // stepsTakenValue.innerHTML = "Multiple player game"
+            const playerListScores = Array.from(document.querySelectorAll(".player"))
+
+            let entries = Object.entries(scorecard)
+            let sorted = entries.sort((a, b) => b[1] - a[1])
+            console.log(sorted)
+            overlay.classList.add("overlay-show");
+            gameResults.innerHTML = `
+            <h3 class="modal-end-title">We have a winner!!</h3>
+            <p>Game over! Here are the results...</p>
+            `
+
+            playerListScores.forEach((element, idk) => {
+
+                const max = sorted[0][1]
+                let elm = sorted[idk][0]
+                console.log(max)
+                if (sorted[idk][1] === max) {
+
+                    gameResults.innerHTML +=
+                        `<div class="multiple-player-results winning-player">
+                             <h4 class="player-title">${elm} (winner!)</h4> 
+                              <p class="players-content">${sorted[idk][1]} pairs</p>
+                         </div> `
+                } else {
+                    gameResults.innerHTML +=
+                        `<div class="multiple-player-results">
+                             <h4 class="player-title">${elm}</h4> 
+                             <p class="players-content">${sorted[idk][1]} pairs</p>
+                         </div> `
+                }
+
+            })
+
+
+        }
+
+
 
         cards.forEach((elem) => {
             if (elem.classList.contains('open-cards')) {

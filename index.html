@@ -81,29 +81,34 @@
     <div class="game-control">
       <h2 class="sr-only">memory game play center</h2>
       <div class="secondary-menu">
-        <img src="./assets/logo.svg" alt="" aria-hidden="true">       
+        <img src="./assets/logo.svg" alt="" aria-hidden="true">
         <button class="secondary-menu-button">menu</button>
       </div>
 
       <div class="container">
-          <!--CARDS TO BE PLACED HERE USING JS-->
+        <!--CARDS TO BE PLACED HERE USING JS-->
       </div>
       <div class="modal-end hide">
-        <h3 class="modal-end-title">You did it!</h3>
-        <p class="modal-end-content">Game over. Here is how you got on...</p>
 
-        <div class="time-taken" aria-live="assertive">
-          <span class="time-taken-label">Time taken</span>
-          <span class="time-taken-value"></span>
+        <div class="game-results">
+          
+          <h3 class="modal-end-title">You did it!</h3>
+          <p class="modal-end-content">Game over. Here is how you got on...</p>
+          <div class="time-taken" aria-live="assertive">
+            <span class="time-taken-label">Time taken</span>
+            <span class="time-taken-value"></span>
+          </div>
+          <div class="steps-taken" aria-live="assertive">
+            <span class="steps-taken-label">Moves taken</span>
+            <span class="steps-taken-value"></span>
+          </div>
+        
         </div>
 
-        <div class="steps-taken" aria-live="assertive">
-          <span class="steps-taken-label">Moves taken</span>
-          <span class="steps-taken-value"></span>
+        <div class="setup-restart">
+          <input type="button" value="Restart" class="restart-button" />
+          <input type="button" value="Setup new game" class="setup-new-game-button" />
         </div>
-
-        <input type="button" value="Restart" class="restart-button" />
-        <input type="button" value="Setup new game" class="setup-new-game-button" />
 
       </div>
     </div>
@@ -115,7 +120,7 @@
     </div>
 
     <div class="time-steps-record">
-      
+
     </div>
 
     <div class="overlay"></div>
