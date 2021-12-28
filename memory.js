@@ -54,6 +54,15 @@ let count = 0; // used to find if all combinations has been meet to win the game
 let sec = 0;
 let min = 0;
 let interval;
+let tempIndex = 0;
+
+const scorecard = {
+    "player1": 0,
+    "player2": 0,
+    "player3": 0,
+    "player4": 0
+}
+
 
 resetBtn.addEventListener("click", () => {
     document.querySelector(".game-section").classList.add("modal-menu-toggle")
@@ -177,11 +186,12 @@ const singlePlayerTemplate =
 const doublePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
-         <div class="player player1 active-player">
+        
+         <div data-id="1" class="player player1 active-player">
              <h4>P1</h4>
              <p class="score score1">0</p>
          </div>
-         <div class="player player2">
+         <div data-id="2" class="player player2">
              <h4>P2</h4>
              <p class="score score2">0</p>
          </div>
@@ -190,38 +200,38 @@ const doublePlayerTemplate =
 const triplePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
-         <div class="player player1 active-player">
+         <div data-id="1" class="player player1 active-player">
              <h4>P1</h4>
              <p class="score score1">0</p>
          </div>
-         <div class="player player2">
+         <div data-id="2" class="player player2">
              <h4>P2</h4>
              <p class="score score2">0</p>
          </div>
-         <div class="player player3">
+         <div data-id="3" class="player player3">
              <h4>P3</h4>
-             <p class="score score2">0</p>
+             <p class="score score3">0</p>
          </div>
     </div>`
 
 const quadPlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
-         <div class="player player1 active-player">
+         <div data-id="1" class="player player1 active-player">
              <h4>P1</h4>
              <p class="score score1">0</p>
          </div>
-         <div class="player player2">
+         <div data-id="2" class="player player2">
              <h4>P2</h4>
              <p class="score score2">0</p>
          </div>
-         <div class="player player3">
+         <div data-id="3" class="player player3">
              <h4>P3</h4>
-             <p class="score score2">0</p>
+             <p class="score score3">0</p>
          </div>
-         <div class="player player4">
+         <div data-id="4" class="player player4">
              <h4>P4</h4>
-             <p class="score score2">0</p>
+             <p class="score score4">0</p>
          </div>
     </div>`
 
@@ -380,7 +390,40 @@ const stepsTimerChecker = (numberOfSteps) => {
 
 const numberOfPlayers = () => {
     const players = Array.from(document.querySelectorAll(".player"));
-    console.log(players);
+
+    players.forEach((player, index) => {
+        player.classList.remove("active-player")
+    })
+
+    if (tempIndex < players.length - 1) {
+        tempIndex += 1;
+    } else {
+        tempIndex = 0
+    }
+    console.log(tempIndex)
+    players[tempIndex].classList.add("active-player")
+}
+
+const playersScore = () => {
+    const players = Array.from(document.querySelectorAll(".player"));
+    let targetDiv;
+    let id;
+    let calcID;
+    for (const player of players) {
+        if (player.classList.contains("active-player")) {
+            targetDiv = player;
+            id = targetDiv.getAttribute("data-id")
+        }
+    }
+
+    const scoreUpdate = document.querySelector(`.score${id}`)
+    calcID = `player${id}`
+    console.log(calcID)
+    scorecard[calcID] = scorecard[calcID] += 1
+    console.log(scorecard)
+    console.log(targetDiv)
+    console.log(id)
+    scoreUpdate.innerHTML = scorecard[calcID]
 }
 
 function compareCards(currNum) {
@@ -393,22 +436,22 @@ function compareCards(currNum) {
 
         if (lonePlayer) {
             stepsTimerChecker(stepCount);
-            numberOfPlayers();
+            // numberOfPlayers();
         }
 
         if (doublePlayer) {
             console.log("two players involved")
-            numberOfPlayers()
+            //  numberOfPlayers()
         }
 
         if (trioPlayer) {
             console.log("three players battling it out")
-            numberOfPlayers()
+            //  numberOfPlayers()
         }
 
         if (quadPlayer) {
             console.log("four people game")
-            numberOfPlayers()
+            // numberOfPlayers()
         }
         /*
 
@@ -420,15 +463,17 @@ function compareCards(currNum) {
             tempArray[0].classList.add('match');
             tempArray[1].classList.add('match');
             tempArray = [];
+            playersScore();
             endGame();
         } else {
-            console.log("No match found");
+            // console.log("No match found");
             setTimeout(function () {
-                console.log("Remove opened cards");
+                //   console.log("Remove opened cards");
                 tempArray[0].classList.toggle('open-cards');
                 tempArray[1].classList.toggle('open-cards');
                 tempArray = [];
             }, 500);
+            numberOfPlayers()
         }
 
     }
