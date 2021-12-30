@@ -31,7 +31,8 @@ const container = document.querySelector(".container");
 const restartButtons = document.querySelectorAll(".restart-button");
 let resumeGameBtn = document.querySelector(".resume-game-button");
 let resetBtn = document.querySelector(".reset-button");
-const setupNewGameButton = document.querySelector(".setup-new-game-button");
+const setupNewGameButtons = document.querySelectorAll(".setup-new-game-button");
+//setup-new-game-button-tab
 const menuSettings = document.querySelector(".secondary-menu-button");
 
 let selectFour = true; // grid size selector 4X4 or 6X6
@@ -98,8 +99,8 @@ modalMenuControl.addEventListener("click", () => {
 })
 
 function resetGame() {
-    const minHand = document.getElementById("minute");
-    const secHand = document.getElementById("seconds");
+    // const minHand = document.getElementById("minute");
+    // const secHand = document.getElementById("seconds");
     const modal = document.querySelector(".modal-end");
     const stepsTaken = document.querySelector(".stepsCount")
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
@@ -171,10 +172,17 @@ function shuffle(array) {
 };
 
 const createBoardElements = (el) => {
-    const button = document.createElement("button")
-    button.classList.add("game-buttons")
+    const button = document.createElement("button");
+    //  const span = document.createElement("span");
+    //  span.innerHTML = "item already paired , select another element"
+    // span.classList.add("span-in-btn");
+    // span.classList.add("sr-only");
+    // span.classList.add("hide");
+    button.classList.add("game-buttons");
     button.innerHTML = el;
-    container.appendChild(button)
+    button.setAttribute("aria-label", el);
+    // button.appendChild(span)
+    container.appendChild(button);
 }
 
 const singlePlayerTemplate =
@@ -196,11 +204,11 @@ const doublePlayerTemplate =
          <h3 class="sr-only">2 players involved in this game</h3>
         
          <div data-id="1" class="player player1 active-player">
-             <h4>P1</h4>
+             <h4 class="player-title">P1</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4>P2</h4>
+             <h4 class="player-title">P2</h4>
              <p class="score score2">0</p>
          </div>
     </div>`
@@ -209,15 +217,15 @@ const triplePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
          <div data-id="1" class="player player1 active-player">
-             <h4>P1</h4>
+             <h4 class="player-title">P1</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4>P2</h4>
+             <h4 class="player-title">P2</h4>
              <p class="score score2">0</p>
          </div>
          <div data-id="3" class="player player3">
-             <h4>P3</h4>
+             <h4 class="player-title">P3</h4>
              <p class="score score3">0</p>
          </div>
     </div>`
@@ -226,19 +234,19 @@ const quadPlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
          <div data-id="1" class="player player1 active-player">
-             <h4>P1</h4>
+             <h4 class="player-title">P1</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4>P2</h4>
+             <h4 class="player-title">P2</h4>
              <p class="score score2">0</p>
          </div>
          <div data-id="3" class="player player3">
-             <h4>P3</h4>
+             <h4 class="player-title">P3</h4>
              <p class="score score3">0</p>
          </div>
          <div data-id="4" class="player player4">
-             <h4>P4</h4>
+             <h4 class="player-title">P4</h4>
              <p class="score score4">0</p>
          </div>
     </div>`
@@ -344,7 +352,7 @@ function startGame() {
         playGame()
     } else if (selectedPlayer === 2) {
         console.log(selectedPlayer)
-        timeStepsRecord.innerHTML = doublePlayerTemplate;
+        timeStepsRecord.innerHTML = doublePlayerTemplate;        
         inProgress = true;
         lonePlayer = false;
         doublePlayer = true;
@@ -407,7 +415,7 @@ const numberOfPlayers = () => {
         tempIndex += 1;
     } else {
         tempIndex = 0
-    }   
+    }
     players[tempIndex].classList.add("active-player")
 }
 
@@ -425,13 +433,14 @@ const playersScore = () => {
         }
 
         const scoreUpdate = document.querySelector(`.score${id}`)
-        calcID = `player${id}`       
-        scorecard[calcID] = scorecard[calcID] += 1       
+        calcID = `player${id}`
+        scorecard[calcID] = scorecard[calcID] += 1
         scoreUpdate.innerHTML = scorecard[calcID]
     }
 }
 
 function compareCards(currNum) {
+
     if (tempArray.length <= 2) { // changed tempArray.length <= 2 to the current
         tempArray.push(currNum);
     }
@@ -442,19 +451,6 @@ function compareCards(currNum) {
         if (lonePlayer) {
             stepsTimerChecker(stepCount);
         }
-        /*
-               if (doublePlayer) {
-                   console.log("two players involved")           
-               }
-       
-               if (trioPlayer) {
-                   console.log("three players battling it out")            
-               }
-       
-               if (quadPlayer) {
-                   console.log("four people game")           
-               }
-               */
 
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {
             tempArray[0].classList.add('match');
@@ -468,6 +464,7 @@ function compareCards(currNum) {
                 //   console.log("Remove opened cards");
                 tempArray[0].classList.toggle('open-cards');
                 tempArray[1].classList.toggle('open-cards');
+
                 tempArray = [];
             }, 500);
             if (lonePlayer === false) {
@@ -642,16 +639,17 @@ function endGame() {
     }
 }
 
-
-setupNewGameButton.addEventListener("click", function () {
-    const modalEnd = document.querySelector(".modal-end");
-    console.log("set up new game button")
-    document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
-    const overlay = document.querySelector(".overlay");
-    overlay.classList.remove("overlay-show");
-    modalEnd.classList.add("hide");
-    resetGame()
-    myTimer()
+setupNewGameButtons.forEach(setupNewGameButton => {
+    setupNewGameButton.addEventListener("click", function () {
+        const modalEnd = document.querySelector(".modal-end");
+        console.log("set up new game button")
+        document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.remove("overlay-show");
+        modalEnd.classList.add("hide");
+        resetGame()
+        myTimer()
+    })
 })
 
 menuSettings.addEventListener("click", () => {
@@ -664,7 +662,18 @@ resumeGameBtn.addEventListener("click", () => {
 
 const resumePausedGame = () => {
     const overLay = document.querySelector(".overlay")
+    const menuAria = menuSettings.getAttribute("aria-pressed")
+    console.log(`menu settings button, ${menuAria}`)
     document.querySelector(".game-section").classList.toggle("modal-menu-toggle");
+
+    if (menuAria) {
+        menuSettings.setAttribute("aria-pressed", false)
+    } else {
+        menuSettings.setAttribute("aria-pressed", true)
+    }
+
+    console.log(`menu settings button, ${menuAria}`)
+
     isPaused = !isPaused;
     console.log(isPaused)
     isPaused ?
