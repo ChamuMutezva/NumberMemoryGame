@@ -110,7 +110,7 @@ modalMenuControl.addEventListener("click", () => {
 ---------------------------------------------*/
 
 function resetGame() {
-    
+
     const modal = document.querySelector(".modal-end");
     const stepsTaken = document.querySelector(".stepsCount")
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
@@ -154,7 +154,7 @@ function shufflePlayCards() {
     shuffle(numArray4)
     shuffle(numArray6)
     shuffle(iconArray4)
-    shuffle(iconArray6);   
+    shuffle(iconArray6);
 }
 
 /* ---------------------------------------------------------------------------------------
@@ -189,11 +189,13 @@ function shuffle(array) {
 ---------------------------------------------*/
 
 const createBoardElements = (el) => {
-    const button = document.createElement("button");   
+    const button = document.createElement("button");
     button.classList.add("game-buttons");
     button.innerHTML = el;
     button.setAttribute("aria-label", el);
     // button.appendChild(span)
+    // container.setAttribute("tabindex", "-1")
+    // container.focus()
     container.appendChild(button);
 }
 
@@ -226,11 +228,11 @@ const doublePlayerTemplate =
          <h3 class="sr-only">2 players involved in this game</h3>
         
          <div data-id="1" class="player player1 active-player">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 1" : "P1"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 1" : "P1"}</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 2" : "P2"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 2" : "P2"}</h4>
              <p class="score score2">0</p>
          </div>
     </div>`
@@ -239,15 +241,15 @@ const triplePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
          <div data-id="1" class="player player1 active-player">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 1" : "P1"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 1" : "P1"}</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 2" : "P2"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 2" : "P2"}</h4>
              <p class="score score2">0</p>
          </div>
          <div data-id="3" class="player player3">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 3" : "P3"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 3" : "P3"}</h4>
              <p class="score score3">0</p>
          </div>
     </div>`
@@ -256,22 +258,27 @@ const quadPlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
          <div data-id="1" class="player player1 active-player">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 1" : "P1"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 1" : "P1"}</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 2" : "P2"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 2" : "P2"}</h4>
              <p class="score score2">0</p>
          </div>
          <div data-id="3" class="player player3">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 3" : "P3"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 3" : "P3"}</h4>
              <p class="score score3">0</p>
          </div>
          <div data-id="4" class="player player4">
-             <h4 class="player-title">${mediaQuery.matches  ? "Player 4" : "P4"}</h4>
+             <h4 class="player-title">${mediaQuery.matches ? "Player 4" : "P4"}</h4>
              <p class="score score4">0</p>
          </div>
     </div>`
+
+/* -------------------------------------------------------------------
+    --  SELECT BETWEEN USING THE NUMBERS OR ICONS TO PLAY THE GAME  --
+    --                                                              --
+    -----------------------------------------------------------------*/
 
 const selectTheme = () => {
     const themes = document.getElementsByName("theme")
@@ -282,6 +289,10 @@ const selectTheme = () => {
     }
 }
 
+/* ------------------------------------
+    --  SELECT THE GRID SIZE TO USE  --
+    --                               --
+    ---------------------------------*/
 const selectGridSize = () => {
     const gridSize = document.getElementsByName("gridSize")
     for (const grid of gridSize) {
@@ -291,6 +302,11 @@ const selectGridSize = () => {
     }
 
 }
+
+/* ------------------------------------
+    --  SELECT THE NUMBER OF PLAYERS --
+    --  TO PLAY THE GAME             --
+    ---------------------------------*/
 
 const selectNumPlayers = () => {
     const players = document.getElementsByName("players");
@@ -378,8 +394,8 @@ function startGame() {
         trioPlayer = false;
         quadPlayer = false;
         playGame()
-    } else if (selectedPlayer === 2) {        
-        timeStepsRecord.innerHTML = doublePlayerTemplate;        
+    } else if (selectedPlayer === 2) {
+        timeStepsRecord.innerHTML = doublePlayerTemplate;
         inProgress = true;
         lonePlayer = false;
         doublePlayer = true;
@@ -407,13 +423,13 @@ function startGame() {
 
 }
 
- /* -------------------------------------------------------------------
-    --  PLAYGAME FUNCTION - CHECK IF GAME IS ALREADY IN PROGRESS     --
-    --  IF IN INPROGRESS REMOVE ANY DISABLED CLASS FROM THE CARD     --
-    --  ADD CLICK EVENTLISTENER, IF ELEMENT HAS OPEN-CARDS CLASS     --
-    --  DO NOTHING, IT HAS BEEN CLICKED, WAITING FOR SECOND CARD     --
-    --  TO PAIR. OTHERWISE COMPARE THE CARDS TO FIND IF THEY MATCH   -- 
-    -----------------------------------------------------------------*/
+/* -------------------------------------------------------------------
+   --  PLAYGAME FUNCTION - CHECK IF GAME IS ALREADY IN PROGRESS     --
+   --  IF IN INPROGRESS REMOVE ANY DISABLED CLASS FROM THE CARD     --
+   --  ADD CLICK EVENTLISTENER, IF ELEMENT HAS OPEN-CARDS CLASS     --
+   --  DO NOTHING, IT HAS BEEN CLICKED, WAITING FOR SECOND CARD     --
+   --  TO PAIR. OTHERWISE COMPARE THE CARDS TO FIND IF THEY MATCH   -- 
+   -----------------------------------------------------------------*/
 
 const playGame = () => {
     if (inProgress) {
@@ -519,12 +535,10 @@ function compareCards(currNum) {
             playersScore();
             endGame();
         } else {
-            // console.log("No match found");
+
             setTimeout(function () {
-                //   console.log("Remove opened cards");
                 tempArray[0].classList.toggle('open-cards');
                 tempArray[1].classList.toggle('open-cards');
-
                 tempArray = [];
             }, 500);
             if (lonePlayer === false) {
@@ -561,6 +575,7 @@ function startTimer() {
 function myTimer() {
     const overlay = document.querySelector(".overlay");
     const modalEnd = document.querySelector(".modal-end");
+    const gameResults = document.querySelector(".game-results")
     const modalEndContent = document.querySelector(".modal-end-content");
     const modalEndTitle = document.querySelector(".modal-end-title");
     const timeTakenValue = document.querySelector(".time-taken-value");
@@ -584,18 +599,32 @@ function myTimer() {
         [minHand.innerHTML = `0${min}`, secHand.innerHTML = `0${sec}`, fullTime = `0${min}:0${sec}`] :
         [minHand.innerHTML = `0${min}`, secHand.innerHTML = `${sec}`, fullTime = `0${min}:${sec}`]
 
-    
-    if (min >= 5) {        
-        const tempStepCount = stepCount;
-        resetGame();       
+
+
+    if (min >= 5) {
+        // const tempStepCount = stepCount;
+        resetGame();
         modalEnd.classList.remove("hide");
-        modalEndTitle.innerHTML = "Game over. Mission not complete";
-        modalEndContent.innerHTML = "Better lucky next time";
-        stepsTakenValue.innerHTML = tempStepCount;
-        timeTakenValue.innerHTML = fullTime;
+        /*  modalEndTitle.innerHTML = "Game over. Mission not complete";
+          modalEndContent.innerHTML = "Better lucky next time";
+          stepsTakenValue.innerHTML = tempStepCount;
+          timeTakenValue.innerHTML = fullTime; */
         overlay.classList.add("overlay-show");
 
+        gameResults.innerHTML = ` <h3 class="modal-end-title">Game over. Mission not complete</h3>
+        <p class="modal-end-content">Better lucky next time</p>
+        <div class="time-taken" aria-live="assertive">
+               <span class="time-taken-label">Time taken</span>
+               <span class="time-taken-value">05:00</span>
+        </div>
+        <div class="steps-taken" aria-live="assertive">
+               <span class="steps-taken-label">Moves taken</span>
+               <span class="steps-taken-value">${stepCount}</span>
+        </div>`
+
+
     }
+
 
 }
 
@@ -609,10 +638,11 @@ function myTimer() {
 function endGame() {
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
     const modalEnd = document.querySelector(".modal-end");
-    const gameResults = document.querySelector(".game-results")    
-    const arrayLength = selectFour === true ? numArray4.length : numArray6.length;   
+    const gameResults = document.querySelector(".game-results");
+    const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
+    const gameResultsModal = document.querySelector(".setup-restart");
     let timeMessage = ""
-    const overlay = document.querySelector(".overlay");   
+    const overlay = document.querySelector(".overlay");
     if (count < arrayLength / 2) {
         count = count + 1;
     }
@@ -623,10 +653,11 @@ function endGame() {
         timeMessage = `0${min}:${sec}`;
     }
 
-    if (count === arrayLength / 2) {        
-/* ---------------------------------------------------------------------
-    --  FOR SINGLE PLAYER - WHEN GAME HAS ENDED - DISPLAY THE RESULTS --    
-    -----------------------------------------------------------------*/        
+
+    if (count === arrayLength / 2) {
+        /* ---------------------------------------------------------------------
+            --  FOR SINGLE PLAYER - WHEN GAME HAS ENDED - DISPLAY THE RESULTS --    
+            -----------------------------------------------------------------*/
         if (lonePlayer) {
             gameResults.innerHTML = ` <h3 class="modal-end-title">You did it!</h3>
            <p class="modal-end-content">Game over. Here is how you got on...</p>
@@ -638,18 +669,19 @@ function endGame() {
                   <span class="steps-taken-label">Moves taken</span>
                   <span class="steps-taken-value">${stepCount}</span>
            </div>`
-
+           
             overlay.classList.add("overlay-show");
+            gameResultsModal.focus();
         }
 
         else {
-            
-/* --------------------------------------------------------------------
-    --  FOR MULTIPLE PLAYERS - SORT THE PLAYERS FROM WINNING POINTS  --
-    --  TO LEAST POINTS AND DISPLAY THE RESULTS FROM WINNER TO LOSER --  
-    -----------------------------------------------------------------*/
+
+            /* --------------------------------------------------------------------
+                --  FOR MULTIPLE PLAYERS - SORT THE PLAYERS FROM WINNING POINTS  --
+                --  TO LEAST POINTS AND DISPLAY THE RESULTS FROM WINNER TO LOSER --  
+                -----------------------------------------------------------------*/
             const playerListScores = Array.from(document.querySelectorAll(".player"))
-            
+
             let entries = Object.entries(scorecard)
             let sorted = entries.sort((a, b) => b[1] - a[1])
             console.log(sorted)
@@ -660,38 +692,33 @@ function endGame() {
             `
 
             playerListScores.forEach((element, idk) => {
-
                 const max = sorted[0][1]
-                let elm = sorted[0][0]
-                const winner = elm;
-                console.log(winner)
-                console.log(elm)
-                console.log(sorted[idk][1])
+
                 if (sorted[idk][1] === max) {
 
                     gameResults.innerHTML +=
                         `<div class="multiple-player-results winning-player">
-                             <h4 class="player-title">${sorted[idk][0]} (winner!)</h4> 
+                             <h4 class="player-title">Player ${sorted[idk][0].slice(sorted[idk][0].length - 1)} (winner!)</h4> 
                               <p class="players-content">${sorted[idk][1]} pairs</p>
                          </div> `
                 } else {
                     gameResults.innerHTML +=
                         `<div class="multiple-player-results">
-                             <h4 class="player-title">${sorted[idk][0]}</h4> 
+                             <h4 class="player-title">Player ${sorted[idk][0].slice(sorted[idk][0].length - 1)}</h4> 
                              <p class="players-content">${sorted[idk][1]} pairs</p>
                          </div> `
                 }
 
-                
-                if (sorted[1][1] === sorted[0][1]) {                                       
-                   return document.querySelector(".modal-end-title").innerHTML = "It is a tie"
+
+                if (sorted[1][1] === sorted[0][1]) {
+                    return document.querySelector(".modal-end-title").innerHTML = "It is a tie"
                 }
 
                 if (sorted[1][1] !== sorted[0][1]) {
                     const str = sorted[0][0].slice(0, sorted[0][0].length - 1)
-                    const strNum = sorted[0][0].slice(sorted[0][0].length -1)
-                   // winnerTitle.innerHTML = `${sorted[0][0]} is the winner`
-                   return document.querySelector(".modal-end-title").innerHTML = `${str} ${strNum} is the winner`
+                    const strNum = sorted[0][0].slice(sorted[0][0].length - 1)
+                    // winnerTitle.innerHTML = `${sorted[0][0]} is the winner`
+                    return document.querySelector(".modal-end-title").innerHTML = `${str} ${strNum} is the winner`
                 }
 
 
@@ -715,7 +742,7 @@ function endGame() {
         gameEnd = true;
         clearInterval(interval);
         modalEnd.classList.toggle("hide");
-
+        gameResultsModal.focus();
         cards.forEach(elem => {
             elem.removeEventListener('click', function (event) {
                 return;
@@ -732,6 +759,7 @@ function endGame() {
     -----------------------------------------------------------------*/
 
 setupNewGameButtons.forEach(setupNewGameButton => {
+    const modalStart = document.querySelector(".modal-start");
     setupNewGameButton.addEventListener("click", function () {
         const modalEnd = document.querySelector(".modal-end");
         console.log("set up new game button")
@@ -739,8 +767,9 @@ setupNewGameButtons.forEach(setupNewGameButton => {
         const overlay = document.querySelector(".overlay");
         overlay.classList.remove("overlay-show");
         modalEnd.classList.add("hide");
-        resetGame()
-        myTimer()
+        modalStart.focus();
+        resetGame();
+        myTimer();
     })
 })
 
@@ -757,21 +786,111 @@ resumeGameBtn.addEventListener("click", () => {
 
 const resumePausedGame = () => {
     const overLay = document.querySelector(".overlay")
-   // const menuAria = menuSettings.getAttribute("aria-pressed")
-   // console.log(`menu settings button, ${menuAria}`)
+    // const menuAria = menuSettings.getAttribute("aria-pressed")
+    // console.log(`menu settings button, ${menuAria}`)
     document.querySelector(".game-section").classList.toggle("modal-menu-toggle");
-/*
-    if (menuAria) {
-        menuSettings.setAttribute("aria-pressed", false)
-    } else {
-        menuSettings.setAttribute("aria-pressed", true)
-    }
-
-    console.log(`menu settings button, ${menuAria}`)
-*/
+    /*
+        if (menuAria) {
+            menuSettings.setAttribute("aria-pressed", false)
+        } else {
+            menuSettings.setAttribute("aria-pressed", true)
+        }
+    
+        console.log(`menu settings button, ${menuAria}`)
+    */
     isPaused = !isPaused;
-  //  console.log(isPaused)
+    //  console.log(isPaused)
     isPaused ?
         [clearInterval(interval), overLay.classList.add("overlay-show")] :
         [interval = setInterval(myTimer, 1000), overLay.classList.remove("overlay-show")];
 }
+
+/* --------------------------------------------------------------------
+    --  MODAL TAB TRAPPING                                           --
+                            --
+    -----------------------------------------------------------------*/
+const modalFirst = document.querySelector(".modal-start");
+
+modalFirst.addEventListener("keydown", (e) => {
+
+    const openingModal = Array.from(document.querySelectorAll(`[data-modal="intro"]`));
+
+    const firstFocusable = openingModal[0];
+    const lastFocusable = openingModal[openingModal.length - 1];
+
+    console.log(e)
+    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+    if (!isTabPressed) {
+        return;
+    }
+
+    if (e.shiftKey) { // if shift key pressed for shift + tab combination
+        if (document.activeElement === firstFocusable) {
+            lastFocusable.focus(); // add focus for the last focusable element
+            e.preventDefault();
+        }
+    } else { // if tab key is pressed
+        if (document.activeElement === lastFocusable) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+            firstFocusable.focus(); // add focus for the first focusable element
+            e.preventDefault();
+        }
+    }
+})
+
+const setupRestartModal = document.querySelector(".setup-restart");
+console.log(setupRestartModal)
+setupRestartModal.addEventListener("keydown", (e) => {
+    const focusables = Array.from(document.querySelectorAll(".restart-setup-btn"));
+    const firstFocus = focusables[0]
+    const lastFocus = focusables[focusables.length - 1]
+
+    console.log(focusables)
+    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+    if (!isTabPressed) {
+        return;
+    }
+
+    if (e.shiftKey) { // if shift key pressed for shift + tab combination
+        if (document.activeElement === firstFocus) {
+            lastFocus.focus(); // add focus for the last focusable element
+            e.preventDefault();
+        }
+    } else { // if tab key is pressed
+        if (document.activeElement === lastFocus) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+            firstFocus.focus(); // add focus for the first focusable element
+            e.preventDefault();
+        }
+    }
+})
+
+// restart-setup-btn
+// setup-restart
+
+/*
+if (modalFirst === document.activeElement) {
+    console.log("element has focus now")
+}
+
+document.addEventListener('keydown', function(e) {
+    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+  
+    if (!isTabPressed) {
+      return;
+    }
+  
+    if (e.shiftKey) { // if shift key pressed for shift + tab combination
+      if (document.activeElement === firstFocusable) {
+        lastFocusable.focus(); // add focus for the last focusable element
+        e.preventDefault();
+      }
+    } else { // if tab key is pressed
+      if (document.activeElement === lastFocusable) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+        firstFocusable.focus(); // add focus for the first focusable element
+        e.preventDefault();
+      }
+    }
+  });
+  
+*/

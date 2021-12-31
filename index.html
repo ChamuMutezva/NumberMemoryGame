@@ -22,7 +22,7 @@
 
 <body>
   <main class="wrapper grid">
-    <div class="modal-start flex">
+    <div class="modal-start flex" tabindex="-1">
       <img src="./assets/logo.svg" alt="" class="logo" aria-hidden="true">
       <h1 class="sr-only">Memory number and picture game</h1>
 
@@ -33,13 +33,13 @@
           <div class="control-container">
 
             <input type="radio" name="theme" id="numbers" class="radio-btn sr-only" value="num" checked
-              aria-checked="true">
+              aria-checked="true" data-modal="intro" >
             <label for="numbers" class="input-labels border-radius">
               <span aria-hidden="true">Numbers</span>
               <span class="sr-only">select to play the numbers memory game</span>
             </label>
 
-            <input type="radio" name="theme" id="icons" value="icon" class="radio-btn sr-only">
+            <input type="radio" name="theme" id="icons" value="icon" class="radio-btn sr-only"  data-modal="intro">
             <label for="icons" class="input-labels border-radius">
               <span aria-hidden="true">Icons </span>
               <span class="sr-only">select to play the images memory game</span>
@@ -53,25 +53,26 @@
 
           <div class="control-container">
 
-            <input type="radio" name="players" id="one" value="1" class="radio-btn sr-only" aria-checked="true" checked>
+            <input type="radio" name="players" id="one" value="1" class="radio-btn sr-only" aria-checked="true"
+             checked  data-modal="intro">
             <label for="one" class="input-labels border-radius">
               <span aria-hidden="true">1</span>
               <span class="sr-only">select single player mode</span>
             </label>
 
-            <input type="radio" name="players" id="two" value="2" class="radio-btn sr-only">
+            <input type="radio" name="players" id="two" value="2" class="radio-btn sr-only"  data-modal="intro">
             <label for="two" class="input-labels border-radius">
               <span aria-hidden="true">2</span>
               <span class="sr-only">select double players mode</span>
             </label>
 
-            <input type="radio" name="players" id="three" value="3" class="radio-btn sr-only">
+            <input type="radio" name="players" id="three" value="3" class="radio-btn sr-only"  data-modal="intro">
             <label for="three" class="input-labels border-radius">
               <span aria-hidden="true">3</span>
               <span class="sr-only">select triple players mode</span>
             </label>
 
-            <input type="radio" name="players" id="four" value="4" class="radio-btn sr-only">
+            <input type="radio" name="players" id="four" value="4" class="radio-btn sr-only" data-modal="intro">
             <label for="four" class="input-labels border-radius">
               <span aria-hidden="true">4</span>
               <span class="sr-only">select four players mode</span>
@@ -85,14 +86,14 @@
           <legend>Grid size</legend>
           <div class="control-container">
 
-            <input type="radio" name="gridSize" id="four-by-four" value="4" aria-label="four by four" aria-checked="true" checked
-              class="radio-btn sr-only">
+            <input type="radio" name="gridSize" id="four-by-four" value="4" aria-label="four by four"
+             aria-checked="true" checked class="radio-btn sr-only" data-modal="intro">
             <label for="four-by-four" class="input-labels border-radius">
               <span aria-hidden="true">4X4</span>
               <span class="sr-only">select four by four grid</span>
             </label>
 
-            <input type="radio" name="gridSize" value="6" id="six-by-six" class="radio-btn sr-only">
+            <input type="radio" name="gridSize" value="6" id="six-by-six" class="radio-btn sr-only"  data-modal="intro">
             <label for="six-by-six" class="input-labels border-radius">
               <span aria-hidden="true">6X6 </span>
               <span class="sr-only">select six by six grid</span>
@@ -100,7 +101,7 @@
 
           </div>
         </fieldset>
-        <button class="modal-menu-control">Start Game</button>
+        <button class="modal-menu-control" data-modal="intro">Start Game</button>
       </div>
 
     </div>
@@ -138,9 +139,9 @@
 
         </div>
 
-        <div class="setup-restart">
-          <input type="button" value="Restart" class="restart-button border-radius" />
-          <input type="button" value="Setup new game" class="setup-new-game-button border-radius" />
+        <div class="setup-restart" tabindex="-1">
+          <input type="button" value="Restart" class="restart-button restart-setup-btn border-radius" />
+          <input type="button" value="Setup new game" class="setup-new-game-button restart-setup-btn border-radius" />
         </div>
 
       </div>

@@ -24,6 +24,10 @@
     /* ----------------------------------- */
     /*          FONT SIZES                 */
     /* ------------------------------------*/
+    --fs-13: 0.8125rem;
+    /*13px */
+    --fs-14: 0.875rem;
+    /*14px */
     --fs-15: 0.9375rem;
     /*15px*/
     --fs-16: 1rem;
@@ -359,10 +363,6 @@ legend {
     text-align: center;
 }
 
-input[type="radio"] {
-    /* display: none;*/
-}
-
 input[type="radio"]:checked+label {
     background-color: hsl(var(--clr-dark-grey));
 }
@@ -426,11 +426,6 @@ input[type="radio"]:focus+label {
 /*      END    BUTTONS                 */
 /* ------------------------------------*/
 
-/*
-h1 {
-    text-align: center;
-}*/
-
 .game-section {
     background-color: hsl(var(--clr-off-white));
     width: 80%;
@@ -456,29 +451,36 @@ h1 {
 
 .modal-end {
     position: absolute;
-    padding: var(--spacer-3);
-    width: 82%;
+    padding-inline: var(--spacer-2);
+    padding-block: var(--spacer-1-65);
+    width: 90%;
     max-width: 40.875rem;
     background-color: hsl(var(--clr-off-white));
     border-radius: 10px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -50%);
     animation-name: zoomIn;
     animation-duration: 4s;
     z-index: 2;
-    padding-block-end: var(--spacer-1-65);
+
 }
 
 .modal-end-title {
-    text-align: center;   
-     font-size: var(--fs-24);
-     text-transform: capitalize;
+    text-align: center;
+    font-size: var(--fs-24);
+    text-transform: capitalize;
+    color: hsl(var(--clr-dark-grey));
+    font-weight: var(--fw-black);
 }
 
-.modal-end-content {  
-    padding-block-end: var(--spacer-3);
-    padding-block-start: var(--spacer-1-65);
+.modal-end-content {
+    padding-block-end: var(--spacer-1);
+    padding-block-start: var(--spacer-half);
+    color: hsl(var(--clr-grey-blue));
+    text-align: center;
+    font-size: var(--fs-14);
+    font-weight: var(--fw-black);
 }
 
 .time-taken,
@@ -486,6 +488,7 @@ h1 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     margin: auto;
     background-color: hsl(var(--clr-light-grey));
     padding: var(--spacer-1);
@@ -517,11 +520,6 @@ input[type="button"] {
     text-align: center;
     padding-block: var(--spacer-1);
 }
-
-/*
-input[type="button"].game-section-buttons:hover,
-input[type="button"].game-section-buttons:focus
-}*/
 
 input[type="button"]:hover,
 input[type="button"]:focus {
@@ -572,11 +570,6 @@ input[type="button"]:focus {
     max-width: 15.625rem;
 }
 
-p {
-    text-align: center;
-    font-size: var(--fs-18);
-}
-
 .overlay {
     width: 0;
 }
@@ -613,6 +606,20 @@ p {
     max-width: 15.625rem;
 }
 
+.time-taken-value,
+.steps-taken-value {
+    font-size: var(--fs-20);
+    font-weight: var(--fw-black);
+    color: hsl(var(--clr-med-grey));
+}
+
+.steps-taken-label,
+.time-taken-label {
+    font-size: var(--fs-13);
+    font-weight: var(--fw-black);
+    color: hsl(var(--clr-med-grey)); 
+}
+
 .players {
     justify-content: center;
 }
@@ -631,7 +638,12 @@ p {
 
 .player-title {
     font-size: var(--fs-15);
-    /* color: hsl(var(--clr-grey-blue)); */
+    color: hsl(var(--clr-grey-blue));
+    font-weight: var(--fw-black);
+}
+
+.players-content {
+    font-size: var(--fs-20);
     font-weight: var(--fw-black);
 }
 
@@ -646,12 +658,15 @@ p {
     color: hsl(var(--clr-white));
 }
 
+.active-player .player-title {
+    color: hsl(var(--clr-white));
+}
+
 .active-player::before {
     content: "";
     position: absolute;
     width: 20px;
     height: 20px;
-    /* bottom: calc(var(--spacer-2-5) * -1); */
     background-color: hsl(var(--clr-orange));
     left: calc(50% - 10px);
     top: -10px;
@@ -666,12 +681,16 @@ p {
     padding-block: var(--spacer-1);
     padding-inline: var(--spacer-half);
     background-color: hsl(var(--clr-white));
-    margin-block-end: var(--spacer-1-65);
+    margin-block-end: var(--spacer-half);
     border-radius: 10px;
 }
 
 .winning-player {
     background-color: hsl(var(--clr-dark-grey));
+    color: hsl(var(--clr-white));
+}
+
+.winning-player .player-title {
     color: hsl(var(--clr-white));
 }
 
@@ -706,8 +725,8 @@ input[type="button"].setup-new-game-button-tab:hover {
         padding-block: var(--spacer-three-quarters);
     }
 
-    .secondary-menu {       
-        margin-block-end: var(--spacer-3);      
+    .secondary-menu {
+        margin-block-end: var(--spacer-3);
     }
 
     .secondary-menu-button {
@@ -734,11 +753,11 @@ input[type="button"].setup-new-game-button-tab:hover {
         content: "CURRENT TURN";
         position: absolute;
         width: 100%;
-        font-size: var(--fs-15);        
+        font-size: var(--fs-15);
         color: hsl(var(--clr-dark-grey));
         left: 0;
         bottom: calc(-1 * var(--spacer-2));
-        text-align: center;   
-        font-weight: var(--fw-black);     
+        text-align: center;
+        font-weight: var(--fw-black);
     }
 }
