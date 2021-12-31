@@ -56,6 +56,7 @@ let sec = 0;
 let min = 0;
 let interval;
 let tempIndex = 0;
+const mediaQuery = window.matchMedia("(min-width: 38.75rem)")
 
 const scorecard = {
     "player1": 0,
@@ -90,6 +91,11 @@ restartButtons.forEach(restartButton => {
 
 })
 
+/* --------------------------------------------
+--         TO START THE GAME -               --
+--     CLOSE THE OPENING MODAL DIALOG BOX    --
+---------------------------------------------*/
+
 modalMenuControl.addEventListener("click", () => {
     document.querySelector(".modal-start").classList.add("hide-modal-menu-control");
     container.innerHTML = "";
@@ -98,9 +104,13 @@ modalMenuControl.addEventListener("click", () => {
     startGame();
 })
 
+/* --------------------------------------------
+--     RESET THE GAME TO STARTING POINT -    --
+--                                           --
+---------------------------------------------*/
+
 function resetGame() {
-    // const minHand = document.getElementById("minute");
-    // const secHand = document.getElementById("seconds");
+    
     const modal = document.querySelector(".modal-end");
     const stepsTaken = document.querySelector(".stepsCount")
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
@@ -135,22 +145,24 @@ function resetGame() {
 
 }
 
+/* --------------------------------------------
+--         SHUFFLE THE CARDS                 --
+--     FOUR ARRAYS IN TOTAL                  --
+---------------------------------------------*/
+
 function shufflePlayCards() {
     shuffle(numArray4)
     shuffle(numArray6)
     shuffle(iconArray4)
-    shuffle(iconArray6);
-    /*
-    console.log(selectedTheme) 
-   if (selectedTheme === "num") {
-       selectFour ? shuffle(numArray4) : shuffle(numArray6);
-   } else if (selectedTheme === "icon") {
-       selectFour ? shuffle(iconArray4) : shuffle(iconArray6);
-   }*/
+    shuffle(iconArray6);   
 }
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-// inspiration drawn from https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+/* ---------------------------------------------------------------------------------------
+--              Shuffle Function                                                        --
+--    Shuffle function from http://stackoverflow.com/a/2450976                          --
+--    inspiration drawn from https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle --
+----------------------------------------------------------------------------------------*/
+
 function shuffle(array) {
     let currentIndex = array.length,
         temporaryValue, randomIndex;
@@ -171,13 +183,13 @@ function shuffle(array) {
     return array;
 };
 
+/* --------------------------------------------
+--         CREATE THE BOARD ELEMENTS         --
+--     APPEND THE ELEMENTS TO THE CONTAINER  --
+---------------------------------------------*/
+
 const createBoardElements = (el) => {
-    const button = document.createElement("button");
-    //  const span = document.createElement("span");
-    //  span.innerHTML = "item already paired , select another element"
-    // span.classList.add("span-in-btn");
-    // span.classList.add("sr-only");
-    // span.classList.add("hide");
+    const button = document.createElement("button");   
     button.classList.add("game-buttons");
     button.innerHTML = el;
     button.setAttribute("aria-label", el);
@@ -185,8 +197,13 @@ const createBoardElements = (el) => {
     container.appendChild(button);
 }
 
+/* --------------------------------------------
+--        TEMPLATE FOR A SINGLE PLAYER       --
+--    MOVES AND TIME TAKEN DISPLAY           --
+---------------------------------------------*/
+
 const singlePlayerTemplate =
-    `<div class="time-keeper">
+    `<div class="time-keeper border-radius">
         <h3 class="time-title">Time</h3>
         <div class="time-record">
              <span id="minute">00</span>
@@ -194,21 +211,26 @@ const singlePlayerTemplate =
              <span id="seconds">00</span>
         </div>
      </div>
-     <div class="steps-time-taken">
+     <div class="steps-time-taken border-radius">
           <h3 class="steps-title">Moves</h3>
           <span class="stepsCount">00</span>
       </div>`
+
+/* --------------------------------------------
+--        TEMPLATES FOR MULTIPLE PLAYERS     --
+--              SCORES PER PLAYER            --
+---------------------------------------------*/
 
 const doublePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
         
          <div data-id="1" class="player player1 active-player">
-             <h4 class="player-title">P1</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 1" : "P1"}</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4 class="player-title">P2</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 2" : "P2"}</h4>
              <p class="score score2">0</p>
          </div>
     </div>`
@@ -217,15 +239,15 @@ const triplePlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
          <div data-id="1" class="player player1 active-player">
-             <h4 class="player-title">P1</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 1" : "P1"}</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4 class="player-title">P2</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 2" : "P2"}</h4>
              <p class="score score2">0</p>
          </div>
          <div data-id="3" class="player player3">
-             <h4 class="player-title">P3</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 3" : "P3"}</h4>
              <p class="score score3">0</p>
          </div>
     </div>`
@@ -234,19 +256,19 @@ const quadPlayerTemplate =
     `<div class="players flex2">
          <h3 class="sr-only">2 players involved in this game</h3>
          <div data-id="1" class="player player1 active-player">
-             <h4 class="player-title">P1</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 1" : "P1"}</h4>
              <p class="score score1">0</p>
          </div>
          <div data-id="2" class="player player2">
-             <h4 class="player-title">P2</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 2" : "P2"}</h4>
              <p class="score score2">0</p>
          </div>
          <div data-id="3" class="player player3">
-             <h4 class="player-title">P3</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 3" : "P3"}</h4>
              <p class="score score3">0</p>
          </div>
          <div data-id="4" class="player player4">
-             <h4 class="player-title">P4</h4>
+             <h4 class="player-title">${mediaQuery.matches  ? "Player 4" : "P4"}</h4>
              <p class="score score4">0</p>
          </div>
     </div>`
@@ -341,6 +363,12 @@ function startGame() {
         return;
     }
 
+    /* -------------------------------------------------------------
+    --  VARIABLE SELECTEDPLAYER IS SET WITH THE RADIO BUTTONS     --
+    --  IT DETERMINES WHETHER THE GAME IS BEING PLAYED AS         --
+    --  SINGLE, DOUBLE , TRIPLE OR A 4 PLAYER GAME                --
+    --------------------------------------------------------------*/
+
     if (selectedPlayer === 1) {
         timeStepsRecord.innerHTML = singlePlayerTemplate;
         startTimer();
@@ -350,8 +378,7 @@ function startGame() {
         trioPlayer = false;
         quadPlayer = false;
         playGame()
-    } else if (selectedPlayer === 2) {
-        console.log(selectedPlayer)
+    } else if (selectedPlayer === 2) {        
         timeStepsRecord.innerHTML = doublePlayerTemplate;        
         inProgress = true;
         lonePlayer = false;
@@ -380,6 +407,14 @@ function startGame() {
 
 }
 
+ /* -------------------------------------------------------------------
+    --  PLAYGAME FUNCTION - CHECK IF GAME IS ALREADY IN PROGRESS     --
+    --  IF IN INPROGRESS REMOVE ANY DISABLED CLASS FROM THE CARD     --
+    --  ADD CLICK EVENTLISTENER, IF ELEMENT HAS OPEN-CARDS CLASS     --
+    --  DO NOTHING, IT HAS BEEN CLICKED, WAITING FOR SECOND CARD     --
+    --  TO PAIR. OTHERWISE COMPARE THE CARDS TO FIND IF THEY MATCH   -- 
+    -----------------------------------------------------------------*/
+
 const playGame = () => {
     if (inProgress) {
         const cards = Array.from(document.querySelectorAll(".game-buttons"));
@@ -398,12 +433,22 @@ const playGame = () => {
     }
 }
 
+/* --------------------------------------------------------------------
+    --  STEPSTIMERCHECKER FUNCTION - FOR SINGLE PLAYER ONLY          --
+    --  TO DISPLAY THE NUMBER OF THE STEPS AS A 2 DIGIT              --    
+    -----------------------------------------------------------------*/
+
 const stepsTimerChecker = (numberOfSteps) => {
     const stepsTaken = document.querySelector(".stepsCount")
     numberOfSteps < 10 ? stepsTaken.innerHTML = `0${numberOfSteps}` :
         stepsTaken.innerHTML = `${numberOfSteps}`
 }
 
+/* -------------------------------------------------------------------
+    --  NUMBEROFPLAYERS FUNCTION - TO DISPLAY CURRENT ACTIVE        --
+    --  PLAYER IN THE GAME - FOR MULTIPLE PLAYER                    --
+    --                                                               --
+    -----------------------------------------------------------------*/
 const numberOfPlayers = () => {
     const players = Array.from(document.querySelectorAll(".player"));
 
@@ -419,6 +464,11 @@ const numberOfPlayers = () => {
     players[tempIndex].classList.add("active-player")
 }
 
+/* -------------------------------------------------------------------
+    --  PLAYERSCORE FUNCTION - TO DISPLAY THE SCORES OF EACH         --
+    --  OF THE PLAYERS IN THE GAME - FOR MULTIPLE PLAYER LOGIC       --
+    --                                                               --
+    -----------------------------------------------------------------*/
 const playersScore = () => {
     if (!lonePlayer) {
         const players = Array.from(document.querySelectorAll(".player"));
@@ -438,6 +488,16 @@ const playersScore = () => {
         scoreUpdate.innerHTML = scorecard[calcID]
     }
 }
+
+/* --------------------------------------------------------------------
+    --  COMPARECARDS FUNCTION - TEMPARRAY IS AN ARRAY THAT HOLDS     --
+    --  A MAX OF 2 ITEMS. IF ARRAY HAS LESS THAN 2 ITEMS ADD TO      --
+    --  THE ARRAY. IF EQUAL TO 2 INCREASE THE NUMBER OF STEPS.       --
+    --  FOR SINGLE PLAYER UPDATE THE DISPLAY OF STEPS WITH THE       --
+    --  STEPSTIMERCHECKER FUNC. CHECK IF THE ARRAY ELEMENTS ARE EQUAL--
+    --  IF EQUAL ADD MATCH CLASS OTHERWISE RESET THE ELEMENTS. FOR   --
+    --  MULTIPLE PLAYERS - MOVE TO NEXT PLAYER IF NO MATCH IN ITEMS  --
+    -----------------------------------------------------------------*/
 
 function compareCards(currNum) {
 
@@ -477,6 +537,12 @@ function compareCards(currNum) {
 
 }
 
+/* --------------------------------------------------------------------
+    --  STARTTIMER  FUNCTION - START THE TIMER WHEN GAME IS NOT IN   --
+    --  PROGRESS OTHERWISE DO NOTHING. FUNCTION FOR SINGLE PLAYER    --
+    --                                                               --
+    -----------------------------------------------------------------*/
+
 function startTimer() {
     if (inProgress == false) {
         interval = setInterval(myTimer, 1000);
@@ -485,6 +551,12 @@ function startTimer() {
     }
 
 }
+
+/* --------------------------------------------------------------------
+    --  MYTIMER FUNCTION - TO DISPLAY THE RUNNING TIMER - SINGLE     --
+    --  PLAYER FUNCTION.  MAX TIME IS 5 MINUTES TO WIN THE GAME      --
+    --                                                               --
+    -----------------------------------------------------------------*/
 
 function myTimer() {
     const overlay = document.querySelector(".overlay");
@@ -512,12 +584,10 @@ function myTimer() {
         [minHand.innerHTML = `0${min}`, secHand.innerHTML = `0${sec}`, fullTime = `0${min}:0${sec}`] :
         [minHand.innerHTML = `0${min}`, secHand.innerHTML = `${sec}`, fullTime = `0${min}:${sec}`]
 
-    //Stop timer at 5 minutes;
-    if (min >= 5) {
-        // let totalSeconds = (min * 60) + sec;
+    
+    if (min >= 5) {        
         const tempStepCount = stepCount;
-        resetGame();
-        //  endGame();
+        resetGame();       
         modalEnd.classList.remove("hide");
         modalEndTitle.innerHTML = "Game over. Mission not complete";
         modalEndContent.innerHTML = "Better lucky next time";
@@ -529,19 +599,20 @@ function myTimer() {
 
 }
 
+/* -------------------------------------------------------------------
+    --  ENDGAME FUNCTION - TO CHECK IF GAME HAS ENDED. GAME ENDS     --
+    --  WHEN THE COUNT VAR IS EQUAL TO HALF THE LENGTH OF THE ARRAY  --
+    --  OF ITEMS USED. ENDGAME IS CALLED AFTER EACH COMPARISON OF    --
+    -- THROUGH THE COMPARECARDS FUNC.                                --
+    -----------------------------------------------------------------*/
+
 function endGame() {
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
     const modalEnd = document.querySelector(".modal-end");
-    const gameResults = document.querySelector(".game-results")
-    // const modalEndContent = document.querySelector(".modal-end-content");
-    // const modalEndTitle = document.querySelector(".modal-end-title");
-    const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
-    // const timeTakenValue = document.querySelector(".time-taken-value");
-    //const stepsTakenValue = document.querySelector(".steps-taken-value");
+    const gameResults = document.querySelector(".game-results")    
+    const arrayLength = selectFour === true ? numArray4.length : numArray6.length;   
     let timeMessage = ""
-    const overlay = document.querySelector(".overlay");
-    // let totalSeconds = (min * 60) + sec
-    // gameResults.innerHTML = ""
+    const overlay = document.querySelector(".overlay");   
     if (count < arrayLength / 2) {
         count = count + 1;
     }
@@ -552,8 +623,10 @@ function endGame() {
         timeMessage = `0${min}:${sec}`;
     }
 
-    if (count === arrayLength / 2) {
-        // console.log("Welldone , game ended");
+    if (count === arrayLength / 2) {        
+/* ---------------------------------------------------------------------
+    --  FOR SINGLE PLAYER - WHEN GAME HAS ENDED - DISPLAY THE RESULTS --    
+    -----------------------------------------------------------------*/        
         if (lonePlayer) {
             gameResults.innerHTML = ` <h3 class="modal-end-title">You did it!</h3>
            <p class="modal-end-content">Game over. Here is how you got on...</p>
@@ -564,50 +637,63 @@ function endGame() {
            <div class="steps-taken" aria-live="assertive">
                   <span class="steps-taken-label">Moves taken</span>
                   <span class="steps-taken-value">${stepCount}</span>
-           </div>
-      `
+           </div>`
 
             overlay.classList.add("overlay-show");
-
-            // stepsTakenValue.innerHTML = stepCount;
-            /* 
-             modalEndTitle.innerHTML = "Game over. here is how you did it...";
-             modalEndContent.innerHTML = "You are a winner!!";
-             */
-
         }
-        else {
-            // stepsTakenValue.innerHTML = "Multiple player game"
-            const playerListScores = Array.from(document.querySelectorAll(".player"))
 
+        else {
+            
+/* --------------------------------------------------------------------
+    --  FOR MULTIPLE PLAYERS - SORT THE PLAYERS FROM WINNING POINTS  --
+    --  TO LEAST POINTS AND DISPLAY THE RESULTS FROM WINNER TO LOSER --  
+    -----------------------------------------------------------------*/
+            const playerListScores = Array.from(document.querySelectorAll(".player"))
+            
             let entries = Object.entries(scorecard)
             let sorted = entries.sort((a, b) => b[1] - a[1])
             console.log(sorted)
             overlay.classList.add("overlay-show");
             gameResults.innerHTML = `
             <h3 class="modal-end-title">We have a winner!!</h3>
-            <p>Game over! Here are the results...</p>
+            <p class="modal-end-content">Game over! Here are the results...</p>
             `
 
             playerListScores.forEach((element, idk) => {
 
                 const max = sorted[0][1]
-                let elm = sorted[idk][0]
-                console.log(max)
+                let elm = sorted[0][0]
+                const winner = elm;
+                console.log(winner)
+                console.log(elm)
+                console.log(sorted[idk][1])
                 if (sorted[idk][1] === max) {
 
                     gameResults.innerHTML +=
                         `<div class="multiple-player-results winning-player">
-                             <h4 class="player-title">${elm} (winner!)</h4> 
+                             <h4 class="player-title">${sorted[idk][0]} (winner!)</h4> 
                               <p class="players-content">${sorted[idk][1]} pairs</p>
                          </div> `
                 } else {
                     gameResults.innerHTML +=
                         `<div class="multiple-player-results">
-                             <h4 class="player-title">${elm}</h4> 
+                             <h4 class="player-title">${sorted[idk][0]}</h4> 
                              <p class="players-content">${sorted[idk][1]} pairs</p>
                          </div> `
                 }
+
+                
+                if (sorted[1][1] === sorted[0][1]) {                                       
+                   return document.querySelector(".modal-end-title").innerHTML = "It is a tie"
+                }
+
+                if (sorted[1][1] !== sorted[0][1]) {
+                    const str = sorted[0][0].slice(0, sorted[0][0].length - 1)
+                    const strNum = sorted[0][0].slice(sorted[0][0].length -1)
+                   // winnerTitle.innerHTML = `${sorted[0][0]} is the winner`
+                   return document.querySelector(".modal-end-title").innerHTML = `${str} ${strNum} is the winner`
+                }
+
 
             })
 
@@ -639,6 +725,12 @@ function endGame() {
     }
 }
 
+
+/* -------------------------------------------------------------------
+    --  SET UP A NEW GAME WITH ALL THE SELECTIONS USING THE RESET   --
+    --  BUTTONS                                                     --
+    -----------------------------------------------------------------*/
+
 setupNewGameButtons.forEach(setupNewGameButton => {
     setupNewGameButton.addEventListener("click", function () {
         const modalEnd = document.querySelector(".modal-end");
@@ -652,6 +744,9 @@ setupNewGameButtons.forEach(setupNewGameButton => {
     })
 })
 
+/* ----------------------------------------------
+    --  PAUSE THE GAME USING THE MENU BUTTON   --                                                    
+    -------------------------------------------*/
 menuSettings.addEventListener("click", () => {
     resumePausedGame()
 })
@@ -662,10 +757,10 @@ resumeGameBtn.addEventListener("click", () => {
 
 const resumePausedGame = () => {
     const overLay = document.querySelector(".overlay")
-    const menuAria = menuSettings.getAttribute("aria-pressed")
-    console.log(`menu settings button, ${menuAria}`)
+   // const menuAria = menuSettings.getAttribute("aria-pressed")
+   // console.log(`menu settings button, ${menuAria}`)
     document.querySelector(".game-section").classList.toggle("modal-menu-toggle");
-
+/*
     if (menuAria) {
         menuSettings.setAttribute("aria-pressed", false)
     } else {
@@ -673,23 +768,10 @@ const resumePausedGame = () => {
     }
 
     console.log(`menu settings button, ${menuAria}`)
-
+*/
     isPaused = !isPaused;
-    console.log(isPaused)
+  //  console.log(isPaused)
     isPaused ?
         [clearInterval(interval), overLay.classList.add("overlay-show")] :
         [interval = setInterval(myTimer, 1000), overLay.classList.remove("overlay-show")];
 }
-
-
-/*
-
-const app = new Realm.App({ id: "<Your App ID>" });
-const credentials = Realm.Credentials.anonymous();
-try {
-  const user = await app.logIn(credentials);
-} catch(err) {
-  console.error("Failed to log in", err);
-}
-    */
-
