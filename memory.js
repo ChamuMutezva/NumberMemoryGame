@@ -32,7 +32,6 @@ const restartButtons = document.querySelectorAll(".restart-button");
 let resumeGameBtn = document.querySelector(".resume-game-button");
 let resetBtn = document.querySelector(".reset-button");
 const setupNewGameButtons = document.querySelectorAll(".setup-new-game-button");
-//setup-new-game-button-tab
 const menuSettings = document.querySelector(".secondary-menu-button");
 
 let selectFour = true; // grid size selector 4X4 or 6X6
@@ -67,23 +66,22 @@ const scorecard = {
 
 
 resetBtn.addEventListener("click", () => {
-    document.querySelector(".game-section").classList.add("modal-menu-toggle")
-    document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
-    document.querySelector(".overlay").classList.remove("overlay-show")
-    resetGame()
-    selectTheme()
-    selectGridSize()
-    shufflePlayCards()
+    document.querySelector(".game-section").classList.add("modal-menu-toggle");
+    document.querySelector(".modal-start").classList.remove("hide-modal-menu-control");
+    document.querySelector(".overlay").classList.remove("overlay-show");
+    resetGame();
+    selectTheme();
+    selectGridSize();
+    shufflePlayCards();
     populateBoard();
     myTimer();
 })
 
 restartButtons.forEach(restartButton => {
 
-    restartButton.addEventListener("click", () => {
-        // document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
-        document.querySelector(".overlay").classList.remove("overlay-show")
-        document.querySelector(".game-section").classList.add("modal-menu-toggle")
+    restartButton.addEventListener("click", () => {       
+        document.querySelector(".overlay").classList.remove("overlay-show");
+        document.querySelector(".game-section").classList.add("modal-menu-toggle");
         resetGame();
         reStartGame = true;
         startGame();
@@ -112,9 +110,9 @@ modalMenuControl.addEventListener("click", () => {
 function resetGame() {
 
     const modal = document.querySelector(".modal-end");
-    const stepsTaken = document.querySelector(".stepsCount")
+    const stepsTaken = document.querySelector(".stepsCount");
     const cards = Array.from(document.querySelectorAll(".game-buttons"));
-    const scoreElement = Array.from(document.querySelectorAll(".score"))
+    const scoreElement = Array.from(document.querySelectorAll(".score"));
 
     tempArray = [];
     count = 0;
@@ -136,12 +134,12 @@ function resetGame() {
     stepsTaken == ! null ? stepsTaken.innerHTML = `00` : null;
 
     cards.forEach(elem => {
-        elem.classList.remove("open-cards")
-        elem.classList.remove("match")
-        elem.classList.add("disable-cards")
+        elem.classList.remove("open-cards");
+        elem.classList.remove("match");
+        elem.classList.add("disable-cards");
     })
 
-    scoreElement.forEach(elm => elm.innerHTML = 0)
+    scoreElement.forEach(elm => elm.innerHTML = 0);
 
 }
 
@@ -151,9 +149,9 @@ function resetGame() {
 ---------------------------------------------*/
 
 function shufflePlayCards() {
-    shuffle(numArray4)
-    shuffle(numArray6)
-    shuffle(iconArray4)
+    shuffle(numArray4);
+    shuffle(numArray6);
+    shuffle(iconArray4);
     shuffle(iconArray6);
 }
 
@@ -294,10 +292,10 @@ const selectTheme = () => {
     --                               --
     ---------------------------------*/
 const selectGridSize = () => {
-    const gridSize = document.getElementsByName("gridSize")
+    const gridSize = document.getElementsByName("gridSize");
     for (const grid of gridSize) {
         if (grid.checked) {
-            selectedGrid = grid.value
+            selectedGrid = grid.value;
         }
     }
 
@@ -313,50 +311,49 @@ const selectNumPlayers = () => {
 
     for (const player of players) {
         if (player.checked) {
-            selectedPlayer = parseInt(player.value)
+            selectedPlayer = parseInt(player.value);
         }
-    }
-    console.log(selectedPlayer)
+    }   
 }
 
 const populateBoard = () => {
-    selectTheme()
-    selectGridSize()
-    shufflePlayCards()
-    selectNumPlayers()
+    selectTheme();
+    selectGridSize();
+    shufflePlayCards();
+    selectNumPlayers();
 
     if (selectedTheme === "num") {
 
         if (selectedGrid === "4") {
             selectFour = true;
-            container.classList.add("containerGrid4")
-            container.classList.remove("containerGrid6")
+            container.classList.add("containerGrid4");
+            container.classList.remove("containerGrid6");
             numArray4.forEach(num => {
-                createBoardElements(num)
+                createBoardElements(num);
             })
         } else {
             selectFour = false;
-            container.classList.add("containerGrid6")
-            container.classList.remove("containerGrid4")
+            container.classList.add("containerGrid6");
+            container.classList.remove("containerGrid4");
             numArray6.forEach(num => {
-                createBoardElements(num)
+                createBoardElements(num);
             })
         }
 
     } else {
         if (selectedGrid === "4") {
             selectFour = true;
-            container.classList.add("containerGrid4")
-            container.classList.remove("containerGrid6")
+            container.classList.add("containerGrid4");
+            container.classList.remove("containerGrid6");
             iconArray4.forEach(icon => {
-                createBoardElements(icon)
+                createBoardElements(icon);
             })
         } else {
             selectFour = false;
-            container.classList.add("containerGrid6")
-            container.classList.remove("containerGrid4")
+            container.classList.add("containerGrid6");
+            container.classList.remove("containerGrid4");
             iconArray6.forEach(icon => {
-                createBoardElements(icon)
+                createBoardElements(icon);
             })
         }
 
@@ -393,7 +390,7 @@ function startGame() {
         doublePlayer = false;
         trioPlayer = false;
         quadPlayer = false;
-        playGame()
+        playGame();
     } else if (selectedPlayer === 2) {
         timeStepsRecord.innerHTML = doublePlayerTemplate;
         inProgress = true;
@@ -435,7 +432,7 @@ const playGame = () => {
     if (inProgress) {
         const cards = Array.from(document.querySelectorAll(".game-buttons"));
         cards.forEach((elem) => {
-            elem.classList.remove("disable-cards")
+            elem.classList.remove("disable-cards");
             elem.addEventListener("click", function (event) {
                 if (elem.classList.contains('open-cards')) {
                     return;
@@ -469,15 +466,15 @@ const numberOfPlayers = () => {
     const players = Array.from(document.querySelectorAll(".player"));
 
     players.forEach((player, index) => {
-        player.classList.remove("active-player")
+        player.classList.remove("active-player");
     })
 
     if (tempIndex < players.length - 1) {
         tempIndex += 1;
     } else {
-        tempIndex = 0
+        tempIndex = 0;
     }
-    players[tempIndex].classList.add("active-player")
+    players[tempIndex].classList.add("active-player");
 }
 
 /* -------------------------------------------------------------------
@@ -494,14 +491,14 @@ const playersScore = () => {
         for (const player of players) {
             if (player.classList.contains("active-player")) {
                 targetDiv = player;
-                id = targetDiv.getAttribute("data-id")
+                id = targetDiv.getAttribute("data-id");
             }
         }
 
-        const scoreUpdate = document.querySelector(`.score${id}`)
-        calcID = `player${id}`
-        scorecard[calcID] = scorecard[calcID] += 1
-        scoreUpdate.innerHTML = scorecard[calcID]
+        const scoreUpdate = document.querySelector(`.score${id}`);
+        calcID = `player${id}`;
+        scorecard[calcID] = scorecard[calcID] += 1;
+        scoreUpdate.innerHTML = scorecard[calcID];
     }
 }
 
@@ -542,7 +539,7 @@ function compareCards(currNum) {
                 tempArray = [];
             }, 500);
             if (lonePlayer === false) {
-                numberOfPlayers()
+                numberOfPlayers();
             }
 
         }
@@ -576,13 +573,13 @@ function myTimer() {
     const overlay = document.querySelector(".overlay");
     const modalEnd = document.querySelector(".modal-end");
     const gameResults = document.querySelector(".game-results")
-    const modalEndContent = document.querySelector(".modal-end-content");
-    const modalEndTitle = document.querySelector(".modal-end-title");
-    const timeTakenValue = document.querySelector(".time-taken-value");
-    const stepsTakenValue = document.querySelector(".steps-taken-value");
+   // const modalEndContent = document.querySelector(".modal-end-content");
+   // const modalEndTitle = document.querySelector(".modal-end-title");
+   // const timeTakenValue = document.querySelector(".time-taken-value");
+   // const stepsTakenValue = document.querySelector(".steps-taken-value");
     const minHand = document.getElementById("minute");
     const secHand = document.getElementById("seconds");
-    let fullTime = 0;
+   // let fullTime = 0;
 
     sec++;
     if (sec > 59) {
@@ -619,7 +616,7 @@ function myTimer() {
         </div>
         <div class="steps-taken" aria-live="assertive">
                <span class="steps-taken-label">Moves taken</span>
-               <span class="steps-taken-value">${stepCount}</span>
+               <span class="steps-taken-value">${stepCount} Moves</span>
         </div>`
 
 
@@ -641,7 +638,7 @@ function endGame() {
     const gameResults = document.querySelector(".game-results");
     const arrayLength = selectFour === true ? numArray4.length : numArray6.length;
     const gameResultsModal = document.querySelector(".setup-restart");
-    let timeMessage = ""
+    let timeMessage = "";
     const overlay = document.querySelector(".overlay");
     if (count < arrayLength / 2) {
         count = count + 1;
@@ -680,11 +677,10 @@ function endGame() {
                 --  FOR MULTIPLE PLAYERS - SORT THE PLAYERS FROM WINNING POINTS  --
                 --  TO LEAST POINTS AND DISPLAY THE RESULTS FROM WINNER TO LOSER --  
                 -----------------------------------------------------------------*/
-            const playerListScores = Array.from(document.querySelectorAll(".player"))
+            const playerListScores = Array.from(document.querySelectorAll(".player"));
 
-            let entries = Object.entries(scorecard)
-            let sorted = entries.sort((a, b) => b[1] - a[1])
-            console.log(sorted)
+            let entries = Object.entries(scorecard);
+            let sorted = entries.sort((a, b) => b[1] - a[1]);            
             overlay.classList.add("overlay-show");
             gameResults.innerHTML = `
             <h3 class="modal-end-title">We have a winner!!</h3>
@@ -692,7 +688,7 @@ function endGame() {
             `
 
             playerListScores.forEach((element, idk) => {
-                const max = sorted[0][1]
+                const max = sorted[0][1];
 
                 if (sorted[idk][1] === max) {
 
@@ -711,14 +707,13 @@ function endGame() {
 
 
                 if (sorted[1][1] === sorted[0][1]) {
-                    return document.querySelector(".modal-end-title").innerHTML = "It is a tie"
+                    return document.querySelector(".modal-end-title").innerHTML = "It is a tie";
                 }
 
                 if (sorted[1][1] !== sorted[0][1]) {
-                    const str = sorted[0][0].slice(0, sorted[0][0].length - 1)
-                    const strNum = sorted[0][0].slice(sorted[0][0].length - 1)
-                    // winnerTitle.innerHTML = `${sorted[0][0]} is the winner`
-                    return document.querySelector(".modal-end-title").innerHTML = `${str} ${strNum} is the winner`
+                    const str = sorted[0][0].slice(0, sorted[0][0].length - 1);
+                    const strNum = sorted[0][0].slice(sorted[0][0].length - 1);                   
+                    return document.querySelector(".modal-end-title").innerHTML = `${str} ${strNum} is the winner`;
                 }
 
 
@@ -761,9 +756,8 @@ function endGame() {
 setupNewGameButtons.forEach(setupNewGameButton => {
     const modalStart = document.querySelector(".modal-start");
     setupNewGameButton.addEventListener("click", function () {
-        const modalEnd = document.querySelector(".modal-end");
-        console.log("set up new game button")
-        document.querySelector(".modal-start").classList.remove("hide-modal-menu-control")
+        const modalEnd = document.querySelector(".modal-end");        
+        document.querySelector(".modal-start").classList.remove("hide-modal-menu-control");
         const overlay = document.querySelector(".overlay");
         overlay.classList.remove("overlay-show");
         modalEnd.classList.add("hide");
@@ -777,48 +771,69 @@ setupNewGameButtons.forEach(setupNewGameButton => {
     --  PAUSE THE GAME USING THE MENU BUTTON   --                                                    
     -------------------------------------------*/
 menuSettings.addEventListener("click", () => {
-    resumePausedGame()
+    resumePausedGame();
 })
 
 resumeGameBtn.addEventListener("click", () => {
-    resumePausedGame()
+    resumePausedGame();
 })
 
 const resumePausedGame = () => {
-    const overLay = document.querySelector(".overlay")
-    // const menuAria = menuSettings.getAttribute("aria-pressed")
-    // console.log(`menu settings button, ${menuAria}`)
-    document.querySelector(".game-section").classList.toggle("modal-menu-toggle");
-    /*
-        if (menuAria) {
-            menuSettings.setAttribute("aria-pressed", false)
-        } else {
-            menuSettings.setAttribute("aria-pressed", true)
-        }
-    
-        console.log(`menu settings button, ${menuAria}`)
-    */
-    isPaused = !isPaused;
-    //  console.log(isPaused)
+    const overLay = document.querySelector(".overlay");    
+    document.querySelector(".game-section").classList.toggle("modal-menu-toggle");   
+    isPaused = !isPaused;    
     isPaused ?
         [clearInterval(interval), overLay.classList.add("overlay-show")] :
         [interval = setInterval(myTimer, 1000), overLay.classList.remove("overlay-show")];
 }
 
 /* --------------------------------------------------------------------
-    --  MODAL TAB TRAPPING                                           --
-                            --
+   --  MODAL TAB TRAPPING                                            --
+   --                                                                --
     -----------------------------------------------------------------*/
 const modalFirst = document.querySelector(".modal-start");
 
 modalFirst.addEventListener("keydown", (e) => {
+    tabTrapping(`[data-modal="intro"]`, e)  
+})
 
-    const openingModal = Array.from(document.querySelectorAll(`[data-modal="intro"]`));
+const setupRestartModal = document.querySelector(".setup-restart");
+
+setupRestartModal.addEventListener("keydown", (e) => {
+    tabTrapping(".restart-setup-btn", e)   
+})
+
+const tabTrapping = (targetElement , e) => {
+  const focusables = document.querySelectorAll(targetElement)
+  const firstFocus = focusables[0]
+  const lastFocus = focusables[focusables.length - 1]
+  
+  let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+  if (!isTabPressed) {
+      return;
+  }
+
+  if (e.shiftKey) { // if shift key pressed for shift + tab combination
+      if (document.activeElement === firstFocus) {
+          lastFocus.focus(); // add focus for the last focusable element
+          e.preventDefault();
+      }
+  } else { // if tab key is pressed
+      if (document.activeElement === lastFocus) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+          firstFocus.focus(); // add focus for the first focusable element
+          e.preventDefault();
+      }
+  }
+}
+
+/*
+element 1
+ /* const openingModal = Array.from(document.querySelectorAll(`[data-modal="intro"]`));
 
     const firstFocusable = openingModal[0];
     const lastFocusable = openingModal[openingModal.length - 1];
 
-    console.log(e)
     let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
 
     if (!isTabPressed) {
@@ -835,17 +850,14 @@ modalFirst.addEventListener("keydown", (e) => {
             firstFocusable.focus(); // add focus for the first focusable element
             e.preventDefault();
         }
-    }
-})
+    } 
 
-const setupRestartModal = document.querySelector(".setup-restart");
-console.log(setupRestartModal)
-setupRestartModal.addEventListener("keydown", (e) => {
-    const focusables = Array.from(document.querySelectorAll(".restart-setup-btn"));
+    element 2
+
+     const focusables = Array.from(document.querySelectorAll(".restart-setup-btn"));
     const firstFocus = focusables[0]
     const lastFocus = focusables[focusables.length - 1]
-
-    console.log(focusables)
+    
     let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
 
     if (!isTabPressed) {
@@ -862,35 +874,8 @@ setupRestartModal.addEventListener("keydown", (e) => {
             firstFocus.focus(); // add focus for the first focusable element
             e.preventDefault();
         }
-    }
-})
+    }*/
 
-// restart-setup-btn
-// setup-restart
 
-/*
-if (modalFirst === document.activeElement) {
-    console.log("element has focus now")
-}
 
-document.addEventListener('keydown', function(e) {
-    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-  
-    if (!isTabPressed) {
-      return;
-    }
-  
-    if (e.shiftKey) { // if shift key pressed for shift + tab combination
-      if (document.activeElement === firstFocusable) {
-        lastFocusable.focus(); // add focus for the last focusable element
-        e.preventDefault();
-      }
-    } else { // if tab key is pressed
-      if (document.activeElement === lastFocusable) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
-        firstFocusable.focus(); // add focus for the first focusable element
-        e.preventDefault();
-      }
-    }
-  });
-  
-*/
+    
