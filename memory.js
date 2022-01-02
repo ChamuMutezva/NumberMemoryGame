@@ -158,7 +158,8 @@ function shufflePlayCards() {
 /* ---------------------------------------------------------------------------------------
 --              Shuffle Function                                                        --
 --    Shuffle function from http://stackoverflow.com/a/2450976                          --
---    inspiration drawn from https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle --
+--    Credit and inspiration drawn from                                                 --
+--    https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle                        --
 ----------------------------------------------------------------------------------------*/
 
 function shuffle(array) {
@@ -514,7 +515,7 @@ const playersScore = () => {
 
 function compareCards(currNum) {
 
-    if (tempArray.length <= 2) { // changed tempArray.length <= 2 to the current
+    if (tempArray.length <= 2) { 
         tempArray.push(currNum);
     }
 
@@ -572,15 +573,10 @@ function startTimer() {
 function myTimer() {
     const overlay = document.querySelector(".overlay");
     const modalEnd = document.querySelector(".modal-end");
-    const gameResults = document.querySelector(".game-results")
-   // const modalEndContent = document.querySelector(".modal-end-content");
-   // const modalEndTitle = document.querySelector(".modal-end-title");
-   // const timeTakenValue = document.querySelector(".time-taken-value");
-   // const stepsTakenValue = document.querySelector(".steps-taken-value");
+    const gameResults = document.querySelector(".game-results")   
     const minHand = document.getElementById("minute");
     const secHand = document.getElementById("seconds");
-   // let fullTime = 0;
-
+  
     sec++;
     if (sec > 59) {
         min++;
@@ -599,13 +595,9 @@ function myTimer() {
 
 
     if (min >= 5) {
-        // const tempStepCount = stepCount;
+      
         resetGame();
-        modalEnd.classList.remove("hide");
-        /*  modalEndTitle.innerHTML = "Game over. Mission not complete";
-          modalEndContent.innerHTML = "Better lucky next time";
-          stepsTakenValue.innerHTML = tempStepCount;
-          timeTakenValue.innerHTML = fullTime; */
+        modalEnd.classList.remove("hide");        
         overlay.classList.add("overlay-show");
 
         gameResults.innerHTML = ` <h3 class="modal-end-title">Game over. Mission not complete</h3>
@@ -826,56 +818,3 @@ const tabTrapping = (targetElement , e) => {
       }
   }
 }
-
-/*
-element 1
- /* const openingModal = Array.from(document.querySelectorAll(`[data-modal="intro"]`));
-
-    const firstFocusable = openingModal[0];
-    const lastFocusable = openingModal[openingModal.length - 1];
-
-    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-
-    if (!isTabPressed) {
-        return;
-    }
-
-    if (e.shiftKey) { // if shift key pressed for shift + tab combination
-        if (document.activeElement === firstFocusable) {
-            lastFocusable.focus(); // add focus for the last focusable element
-            e.preventDefault();
-        }
-    } else { // if tab key is pressed
-        if (document.activeElement === lastFocusable) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
-            firstFocusable.focus(); // add focus for the first focusable element
-            e.preventDefault();
-        }
-    } 
-
-    element 2
-
-     const focusables = Array.from(document.querySelectorAll(".restart-setup-btn"));
-    const firstFocus = focusables[0]
-    const lastFocus = focusables[focusables.length - 1]
-    
-    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-
-    if (!isTabPressed) {
-        return;
-    }
-
-    if (e.shiftKey) { // if shift key pressed for shift + tab combination
-        if (document.activeElement === firstFocus) {
-            lastFocus.focus(); // add focus for the last focusable element
-            e.preventDefault();
-        }
-    } else { // if tab key is pressed
-        if (document.activeElement === lastFocus) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
-            firstFocus.focus(); // add focus for the first focusable element
-            e.preventDefault();
-        }
-    }*/
-
-
-
-    
