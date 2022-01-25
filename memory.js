@@ -191,10 +191,7 @@ const createBoardElements = (el) => {
     const button = document.createElement("button");
     button.classList.add("game-buttons");
     button.innerHTML = el;
-    button.setAttribute("aria-label", el);
-    // button.appendChild(span)
-    // container.setAttribute("tabindex", "-1")
-    // container.focus()
+    button.setAttribute("aria-label", el);    
     container.appendChild(button);
 }
 
@@ -435,6 +432,9 @@ const playGame = () => {
         cards.forEach((elem) => {
             elem.classList.remove("disable-cards");
             elem.addEventListener("click", function (event) {
+                if (tempArray >= 2) {
+                    return
+                }
                 if (elem.classList.contains('open-cards')) {
                     return;
                 } else {
