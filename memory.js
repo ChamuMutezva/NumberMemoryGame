@@ -79,7 +79,7 @@ resetBtn.addEventListener("click", () => {
 
 restartButtons.forEach(restartButton => {
 
-    restartButton.addEventListener("click", () => {       
+    restartButton.addEventListener("click", () => {
         document.querySelector(".overlay").classList.remove("overlay-show");
         document.querySelector(".game-section").classList.add("modal-menu-toggle");
         resetGame();
@@ -191,7 +191,7 @@ const createBoardElements = (el) => {
     const button = document.createElement("button");
     button.classList.add("game-buttons");
     button.innerHTML = el;
-    button.setAttribute("aria-label", el);    
+    button.setAttribute("aria-label", el);
     container.appendChild(button);
 }
 
@@ -306,12 +306,11 @@ const selectGridSize = () => {
 
 const selectNumPlayers = () => {
     const players = document.getElementsByName("players");
-
     for (const player of players) {
         if (player.checked) {
             selectedPlayer = parseInt(player.value);
         }
-    }   
+    }
 }
 
 const populateBoard = () => {
@@ -429,10 +428,12 @@ function startGame() {
 const playGame = () => {
     if (inProgress) {
         const cards = Array.from(document.querySelectorAll(".game-buttons"));
+      //  console.log(cards)
         cards.forEach((elem) => {
             elem.classList.remove("disable-cards");
             elem.addEventListener("click", function (event) {
-                if (tempArray >= 2) {
+                // prevent more than 2 cards to be opened
+                if (tempArray.length >= 2) {
                     return
                 }
                 if (elem.classList.contains('open-cards')) {
@@ -515,7 +516,7 @@ const playersScore = () => {
 
 function compareCards(currNum) {
 
-    if (tempArray.length <= 2) { 
+    if (tempArray.length <= 2) {
         tempArray.push(currNum);
     }
 
@@ -524,6 +525,7 @@ function compareCards(currNum) {
 
         if (lonePlayer) {
             stepsTimerChecker(stepCount);
+          
         }
 
         if (tempArray[0].innerHTML == tempArray[1].innerHTML) {
@@ -535,8 +537,8 @@ function compareCards(currNum) {
         } else {
 
             setTimeout(function () {
-                tempArray[0].classList.toggle('open-cards');
-                tempArray[1].classList.toggle('open-cards');
+                tempArray[0].classList.remove('open-cards');
+                tempArray[1].classList.remove('open-cards');
                 tempArray = [];
             }, 500);
             if (lonePlayer === false) {
@@ -544,7 +546,7 @@ function compareCards(currNum) {
             }
 
         }
-
+       
     }
 
 }
@@ -573,10 +575,10 @@ function startTimer() {
 function myTimer() {
     const overlay = document.querySelector(".overlay");
     const modalEnd = document.querySelector(".modal-end");
-    const gameResults = document.querySelector(".game-results")   
+    const gameResults = document.querySelector(".game-results")
     const minHand = document.getElementById("minute");
     const secHand = document.getElementById("seconds");
-  
+
     sec++;
     if (sec > 59) {
         min++;
@@ -595,9 +597,9 @@ function myTimer() {
 
 
     if (min >= 5) {
-      
+
         resetGame();
-        modalEnd.classList.remove("hide");        
+        modalEnd.classList.remove("hide");
         overlay.classList.add("overlay-show");
 
         gameResults.innerHTML = ` <h3 class="modal-end-title">Game over. Mission not complete</h3>
@@ -658,7 +660,7 @@ function endGame() {
                   <span class="steps-taken-label">Moves taken</span>
                   <span class="steps-taken-value">${stepCount}</span>
            </div>`
-           
+
             overlay.classList.add("overlay-show");
             gameResultsModal.focus();
         }
@@ -672,7 +674,7 @@ function endGame() {
             const playerListScores = Array.from(document.querySelectorAll(".player"));
 
             let entries = Object.entries(scorecard);
-            let sorted = entries.sort((a, b) => b[1] - a[1]);            
+            let sorted = entries.sort((a, b) => b[1] - a[1]);
             overlay.classList.add("overlay-show");
             gameResults.innerHTML = `
             <h3 class="modal-end-title">We have a winner!!</h3>
@@ -704,7 +706,7 @@ function endGame() {
 
                 if (sorted[1][1] !== sorted[0][1]) {
                     const str = sorted[0][0].slice(0, sorted[0][0].length - 1);
-                    const strNum = sorted[0][0].slice(sorted[0][0].length - 1);                   
+                    const strNum = sorted[0][0].slice(sorted[0][0].length - 1);
                     return document.querySelector(".modal-end-title").innerHTML = `${str} ${strNum} is the winner`;
                 }
 
@@ -748,7 +750,7 @@ function endGame() {
 setupNewGameButtons.forEach(setupNewGameButton => {
     const modalStart = document.querySelector(".modal-start");
     setupNewGameButton.addEventListener("click", function () {
-        const modalEnd = document.querySelector(".modal-end");        
+        const modalEnd = document.querySelector(".modal-end");
         document.querySelector(".modal-start").classList.remove("hide-modal-menu-control");
         const overlay = document.querySelector(".overlay");
         overlay.classList.remove("overlay-show");
@@ -771,9 +773,9 @@ resumeGameBtn.addEventListener("click", () => {
 })
 
 const resumePausedGame = () => {
-    const overLay = document.querySelector(".overlay");    
-    document.querySelector(".game-section").classList.toggle("modal-menu-toggle");   
-    isPaused = !isPaused;    
+    const overLay = document.querySelector(".overlay");
+    document.querySelector(".game-section").classList.toggle("modal-menu-toggle");
+    isPaused = !isPaused;
     isPaused ?
         [clearInterval(interval), overLay.classList.add("overlay-show")] :
         [interval = setInterval(myTimer, 1000), overLay.classList.remove("overlay-show")];
@@ -786,35 +788,35 @@ const resumePausedGame = () => {
 const modalFirst = document.querySelector(".modal-start");
 
 modalFirst.addEventListener("keydown", (e) => {
-    tabTrapping(`[data-modal="intro"]`, e)  
+    tabTrapping(`[data-modal="intro"]`, e)
 })
 
 const setupRestartModal = document.querySelector(".setup-restart");
 
 setupRestartModal.addEventListener("keydown", (e) => {
-    tabTrapping(".restart-setup-btn", e)   
+    tabTrapping(".restart-setup-btn", e)
 })
 
-const tabTrapping = (targetElement , e) => {
-  const focusables = document.querySelectorAll(targetElement)
-  const firstFocus = focusables[0]
-  const lastFocus = focusables[focusables.length - 1]
-  
-  let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+const tabTrapping = (targetElement, e) => {
+    const focusables = document.querySelectorAll(targetElement)
+    const firstFocus = focusables[0]
+    const lastFocus = focusables[focusables.length - 1]
 
-  if (!isTabPressed) {
-      return;
-  }
+    let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
 
-  if (e.shiftKey) { // if shift key pressed for shift + tab combination
-      if (document.activeElement === firstFocus) {
-          lastFocus.focus(); // add focus for the last focusable element
-          e.preventDefault();
-      }
-  } else { // if tab key is pressed
-      if (document.activeElement === lastFocus) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
-          firstFocus.focus(); // add focus for the first focusable element
-          e.preventDefault();
-      }
-  }
+    if (!isTabPressed) {
+        return;
+    }
+
+    if (e.shiftKey) { // if shift key pressed for shift + tab combination
+        if (document.activeElement === firstFocus) {
+            lastFocus.focus(); // add focus for the last focusable element
+            e.preventDefault();
+        }
+    } else { // if tab key is pressed
+        if (document.activeElement === lastFocus) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+            firstFocus.focus(); // add focus for the first focusable element
+            e.preventDefault();
+        }
+    }
 }
